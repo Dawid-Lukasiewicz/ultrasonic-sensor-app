@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QGroupBox" name="groupBox">
+  <widget class="QGroupBox" name="GroupButtons">
    <property name="geometry">
     <rect>
      <x>1000</x>
@@ -72,6 +72,24 @@
        <string>Back</string>
       </property>
      </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QGroupBox" name="GroupDataLog">
+   <property name="geometry">
+    <rect>
+     <x>1000</x>
+     <y>260</y>
+     <width>241</width>
+     <height>201</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>Data</string>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <widget class="QTextEdit" name="DataMeasureWindow"/>
     </item>
    </layout>
   </widget>
