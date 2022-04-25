@@ -15,6 +15,9 @@ public:
     explicit MeasureWindow(QWidget *parent = nullptr);
     ~MeasureWindow();
 
+private slots:
+    void on_BackMeasureWindow_clicked();
+
 private:
     Ui::MeasureWindow *ui;
 };

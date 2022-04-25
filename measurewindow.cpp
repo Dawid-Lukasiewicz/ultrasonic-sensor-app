@@ -14,3 +14,11 @@ MeasureWindow::~MeasureWindow()
 {
     delete ui;
 }
+
+void MeasureWindow::on_BackMeasureWindow_clicked()
+{
+    this->hide();
+    ui_s = new SetPortWindow(this);
+    ui_s->show();
+}
+
