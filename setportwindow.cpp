@@ -67,8 +67,6 @@ void SetPortWindow::on_Connect_clicked()
         Device->setFlowControl(QSerialPort::NoFlowControl);
 
         SendToLogs("Serial port opened");
-
-        connect(this->Device, SIGNAL(readyRead()), this, SLOT(ReadFromPort()));
     }
     else
     {
@@ -112,13 +110,15 @@ void SetPortWindow::ReadFromPort()
 void SetPortWindow::on_Measurement_clicked()
 {
 //    SendToDevice("1");
-//    MeasureWindow ui_m;
-//    ui_m.setModal(true);
-//    ui_m.exec();
-
     this->hide();
-    ui_m = new MeasureWindow(this, this->Device);
-    ui_m->show();
+
+    MeasureWindow ui_m(nullptr, this->Device);
+    ui_m.setModal(true);
+    ui_m.exec();
+
+
+//    ui_m = new MeasureWindow(this, this->Device);
+//    ui_m->show();
 }
 
 
