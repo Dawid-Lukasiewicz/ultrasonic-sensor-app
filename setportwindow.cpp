@@ -117,7 +117,7 @@ void SetPortWindow::on_Measurement_clicked()
 //    ui_m.exec();
 
     this->hide();
-    ui_m = new MeasureWindow(this);
+    ui_m = new MeasureWindow(this, this->Device);
     ui_m->show();
 }
 
