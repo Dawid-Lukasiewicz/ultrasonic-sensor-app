@@ -111,7 +111,13 @@ void SetPortWindow::ReadFromPort()
 
 void SetPortWindow::on_Measurement_clicked()
 {
-    SendToDevice("1");
+//    SendToDevice("1");
+    MeasureWindow ui_m;
+    ui_m.setModal(true);
+
+    this->hide();
+
+    ui_m.exec();
 }
 
 

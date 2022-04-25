@@ -9,6 +9,8 @@
 
 #include <QMainWindow>
 
+#include "measurewindow.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class SetPortWindow; }
 QT_END_NAMESPACE

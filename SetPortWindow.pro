@@ -10,12 +10,15 @@ CONFIG += c++17
 
 SOURCES += \
     main.cpp \
+    measurewindow.cpp \
     setportwindow.cpp
 
 HEADERS += \
+    measurewindow.h \
     setportwindow.h
 
 FORMS += \
+    measurewindow.ui \
     setportwindow.ui
 
 TRANSLATIONS += \
