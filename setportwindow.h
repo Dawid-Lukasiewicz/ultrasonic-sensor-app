@@ -36,6 +36,7 @@ private slots:
 
 private:
     Ui::SetPortWindow *ui;
+    MeasureWindow *ui_m;
     QSerialPort *Device;
 };
 #endif // SETPORTWINDOW_H
