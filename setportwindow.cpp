@@ -24,7 +24,7 @@ void SetPortWindow::SendToDevice(const QString &message)
     }
     else
     {
-        SendToLogs("Failed to send message to device");
+        SendToLogs("[ERROR] Failed to send message to device");
         return;
     }
 }
@@ -37,7 +37,7 @@ void SetPortWindow::on_Search_clicked()
     ui->SelectedPort->clear();
     for(int i = 0; i < devices.count(); i++)
     {
-        SendToLogs("[FOUND] " + devices.at(i).portName() + "  " + devices.at(i).description());
+        SendToLogs("[INFO] " + devices.at(i).portName() + "  " + devices.at(i).description());
         ui->SelectedPort->addItem(devices.at(i).portName() + "  " + devices.at(i).description());
     }
 
@@ -47,12 +47,12 @@ void SetPortWindow::on_Connect_clicked()
 {
     if(ui->SelectedPort->count() == 0)
     {
-        SendToLogs("No device found");
+        SendToLogs("[ERROR] No device found");
         return;
     }
     else if(Device->isOpen())
     {
-        SendToLogs("Port " + Device->portName() + " already opened");
+        SendToLogs("[INFO] Port " + Device->portName() + " already opened");
         return;
     }
 
@@ -66,11 +66,11 @@ void SetPortWindow::on_Connect_clicked()
         Device->setStopBits(QSerialPort::OneStop);
         Device->setFlowControl(QSerialPort::NoFlowControl);
 
-        SendToLogs("Serial port opened");
+        SendToLogs("[INFO] Serial port opened");
     }
     else
     {
-        SendToLogs("Failed to open serial port");
+        SendToLogs("[ERROR] Failed to open serial port");
         return;
     }
 
@@ -109,16 +109,13 @@ void SetPortWindow::ReadFromPort()
 
 void SetPortWindow::on_Measurement_clicked()
 {
-//    SendToDevice("1");
     this->hide();
 
     MeasureWindow ui_m(nullptr, this->Device);
     ui_m.setModal(true);
     ui_m.exec();
 
-
-//    ui_m = new MeasureWindow(this, this->Device);
-//    ui_m->show();
+    this->show();
 }
 
 

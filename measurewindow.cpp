@@ -1,8 +1,6 @@
 #include "measurewindow.h"
 #include "ui_measurewindow.h"
-//#include "setportwindow.h"
 
-//SetPortWindow *ui_s;
 MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     QDialog(parent),
     ui(new Ui::MeasureWindow),
@@ -21,12 +19,10 @@ void MeasureWindow::SendToDevice(const QString &message)
 {
     if(Device->isOpen() && Device->isWritable())
     {
-//        qDebug() << "Sent";
         Device->write(message.toStdString().c_str());
     }
     else
     {
-//        qDebug() << "Not Sent";
         return;
     }
 }
@@ -51,9 +47,6 @@ void MeasureWindow::SendToLogs(const QString &message)
 void MeasureWindow::on_BackMeasureWindow_clicked()
 {
     this->close();
-    connect(this, SIGNAL(close), )
-//    ui_s = new SetPortWindow(this);
-//    ui_s->show();
 }
 
 

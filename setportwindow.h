@@ -6,6 +6,7 @@
 #include <QSerialPortInfo>
 #include <QSerialPort>
 #include <QDateTime>
+#include <QPainter>
 
 #include <QMainWindow>
 
