@@ -8,6 +8,10 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
 {
     ui->setupUi(this);
     Device = device;
+    ui->MeasureWindowPlot->addGraph();
+//    ui->MeasureWindowPlot->graph(0)->setPen()
+    ui->MeasureWindowPlot->xAxis->setRange(0, 100);
+    ui->MeasureWindowPlot->yAxis->setRange(0, 50);
 }
 
 MeasureWindow::~MeasureWindow()
@@ -25,6 +29,24 @@ void MeasureWindow::SendToDevice(const QString &message)
     {
         return;
     }
+}
+
+void MeasureWindow::DrawDataPlot(const QVector<double> &X, const QVector<double> &Y)
+{
+    ui->MeasureWindowPlot->graph(0)->setData(X, Y);
+    ui->MeasureWindowPlot->replot();
+}
+
+void MeasureWindow::GenerateAndDraw()
+{
+    QVector<double> X, Y;
+    for(int i = 0; i < 100; i++)
+    {
+        X.push_back(static_cast<double>(i));
+        Y.push_back(static_cast<double>(i/10));
+    }
+
+    DrawDataPlot(X, Y);
 }
 
 void MeasureWindow::ReadFromPort()
@@ -55,5 +77,7 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
     SendToLogs("Start");
     connect(this->Device, SIGNAL(readyRead()), this, SLOT(ReadFromPort()));
     SendToDevice("1");
+
+    GenerateAndDraw();
 }
 

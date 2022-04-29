@@ -19,6 +19,8 @@ public:
     explicit MeasureWindow(QWidget *parent = nullptr, QSerialPort *device = nullptr);
     ~MeasureWindow();
     void SendToDevice(const QString &message);
+    void DrawDataPlot(const QVector<double> &X, const QVector<double> &Y);
+    void GenerateAndDraw();
 
 private slots:
     void ReadFromPort();

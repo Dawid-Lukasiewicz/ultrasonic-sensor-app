@@ -93,7 +93,7 @@
     </item>
    </layout>
   </widget>
-  <widget class="QCustomPlot" name="widget" native="true">
+  <widget class="QCustomPlot" name="MeasureWindowPlot" native="true">
    <property name="geometry">
     <rect>
      <x>10</x>
