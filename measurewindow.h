@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QSerialPort>
 #include <QDateTime>
+#include "qcustomplot.h"
+//#include <QOpenGLWidget>
 
 namespace Ui {
 class MeasureWindow;

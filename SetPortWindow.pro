@@ -1,6 +1,6 @@
 QT       += core gui serialport
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 CONFIG += c++17
 
@@ -11,10 +11,12 @@ CONFIG += c++17
 SOURCES += \
     main.cpp \
     measurewindow.cpp \
+    qcustomplot.cpp \
     setportwindow.cpp
 
 HEADERS += \
     measurewindow.h \
+    qcustomplot.h \
     setportwindow.h
 
 FORMS += \
