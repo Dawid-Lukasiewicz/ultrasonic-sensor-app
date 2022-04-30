@@ -10,8 +10,8 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     Device = device;
     ui->MeasureWindowPlot->addGraph();
     ui->MeasureWindowPlot->graph(0)->setPen(QPen(Qt::red));
-    ui->MeasureWindowPlot->xAxis->setRange(0, 100);
-    ui->MeasureWindowPlot->yAxis->setRange(0, 50);
+    ui->MeasureWindowPlot->xAxis->setRange(0, 50);
+    ui->MeasureWindowPlot->yAxis->setRange(-50, 50);
 }
 
 MeasureWindow::~MeasureWindow()
@@ -94,9 +94,6 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
     SendToLogs("Start");
     connect(this->Device, SIGNAL(readyRead()), this, SLOT(ReadFromPort()));
     SendToDevice("1");
-
-//    GenerateAndDraw();
-//    DrawDataPlot();
 }
 
 
