@@ -20,6 +20,7 @@ public:
     ~MeasureWindow();
     void SendToDevice(const QString &message);
     void DrawDataPlot(const QVector<double> &X, const QVector<double> &Y);
+    void DrawDataPlot();
     void GenerateAndDraw();
 
 private slots:
@@ -28,9 +29,14 @@ private slots:
     void on_BackMeasureWindow_clicked();
     void on_StartMeasureWindow_clicked();
 
+    void on_SetLocationMeasureWindow_clicked();
+
 private:
     Ui::MeasureWindow *ui;
     QSerialPort *Device;
+    QVector<double> m_L;
+    QVector<double> m_X;
+    QVector<double> m_Y;
 };
 
 #endif // MEASUREWINDOW_H

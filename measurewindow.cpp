@@ -9,7 +9,7 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     ui->setupUi(this);
     Device = device;
     ui->MeasureWindowPlot->addGraph();
-//    ui->MeasureWindowPlot->graph(0)->setPen()
+    ui->MeasureWindowPlot->graph(0)->setPen(QPen(Qt::red));
     ui->MeasureWindowPlot->xAxis->setRange(0, 100);
     ui->MeasureWindowPlot->yAxis->setRange(0, 50);
 }
@@ -37,6 +37,12 @@ void MeasureWindow::DrawDataPlot(const QVector<double> &X, const QVector<double>
     ui->MeasureWindowPlot->replot();
 }
 
+void MeasureWindow::DrawDataPlot()
+{
+    ui->MeasureWindowPlot->graph(0)->setData(m_X, m_Y);
+    ui->MeasureWindowPlot->replot();
+}
+
 void MeasureWindow::GenerateAndDraw()
 {
     QVector<double> X, Y;
@@ -53,9 +59,20 @@ void MeasureWindow::ReadFromPort()
 {
     while(Device->canReadLine())
     {
+
         QString line = Device->readLine();
-        int index = line.lastIndexOf("\r");
-        SendToLogs(line.left(index));
+//        int index = line.lastIndexOf("\r");
+//        SendToLogs(line.left(index));
+
+        int index_ = line.lastIndexOf("\n") - 2;
+        SendToLogs(line);
+        if(line.at(0) == ":")
+        {
+            QList<QString> list = (line+1).left(index_).split(" ");
+            m_L.push_back(list.first().toInt());
+            m_X.push_back(list.at(1).toDouble());
+            m_Y.push_back(list.at(2).toDouble());
+        }
     }
 }
 
@@ -78,6 +95,13 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
     connect(this->Device, SIGNAL(readyRead()), this, SLOT(ReadFromPort()));
     SendToDevice("1");
 
-    GenerateAndDraw();
+//    GenerateAndDraw();
+//    DrawDataPlot();
+}
+
+
+void MeasureWindow::on_SetLocationMeasureWindow_clicked()
+{
+    DrawDataPlot();
 }
 
