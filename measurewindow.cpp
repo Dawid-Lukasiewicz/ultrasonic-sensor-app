@@ -10,8 +10,10 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     Device = device;
     ui->MeasureWindowPlot->addGraph();
     ui->MeasureWindowPlot->graph(0)->setPen(QPen(Qt::red));
-    ui->MeasureWindowPlot->xAxis->setRange(0, 50);
-    ui->MeasureWindowPlot->yAxis->setRange(-50, 50);
+    ui->MeasureWindowPlot->xAxis->setRange(-50, 50);
+    ui->MeasureWindowPlot->yAxis->setRange(0, 50);
+
+    ui->MeasureWindowPlot->setInteractions(QCP::iRangeZoom | QCP::iRangeDrag | QCP::iSelectPlottables);
 }
 
 MeasureWindow::~MeasureWindow()
@@ -46,10 +48,10 @@ void MeasureWindow::DrawDataPlot()
 void MeasureWindow::GenerateAndDraw()
 {
     QVector<double> X, Y;
-    for(int i = 0; i < 100; i++)
+    for(int i = -50; i < 51; i++)
     {
         X.push_back(static_cast<double>(i));
-        Y.push_back(static_cast<double>(i/10));
+        Y.push_back(static_cast<double>(sqrt(50*50 - i*i)));
     }
 
     DrawDataPlot(X, Y);
@@ -99,6 +101,7 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
 
 void MeasureWindow::on_SetLocationMeasureWindow_clicked()
 {
-    DrawDataPlot();
+    GenerateAndDraw();
+//    DrawDataPlot();
 }
 
