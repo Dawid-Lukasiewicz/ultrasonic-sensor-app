@@ -61,16 +61,12 @@ void MeasureWindow::ReadFromPort()
 {
     while(Device->canReadLine())
     {
-
         QString line = Device->readLine();
-//        int index = line.lastIndexOf("\r");
-//        SendToLogs(line.left(index));
-
         int index_ = line.lastIndexOf("\n") - 2;
-        SendToLogs(line);
         if(line.at(0) == ":")
         {
             QList<QString> list = (line+1).left(index_).split(" ");
+            SendToLogs("L=" + list.first() + " X=" + list.at(1) + " Y=" + list.at(2));
             m_L.push_back(list.first().toInt());
             m_X.push_back(list.at(1).toDouble());
             m_Y.push_back(list.at(2).toDouble());
@@ -81,7 +77,7 @@ void MeasureWindow::ReadFromPort()
 void MeasureWindow::SendToLogs(const QString &message)
 {
     // NEED TO CHANGE THE WAY I SHOW THE DATA, NO DATETIME NEEDED I GUESS
-    QString CurrentDate = QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss -- ");
+    QString CurrentDate = QDateTime::currentDateTime().toString("hh:mm:ss -- ");
     ui->DataMeasureWindow->append(CurrentDate + " " + message);
 }
 
@@ -102,6 +98,26 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
 void MeasureWindow::on_SetLocationMeasureWindow_clicked()
 {
     GenerateAndDraw();
+
+    QString Date;
+    Date += QDateTime::currentDateTime().toString("hh:mm:ss__dd.MM.yyyy");
+    QFile DataFile("/home/dawid/QT-workspace/Sensor_Project-WDS/datas/" + Date);
+
+    if(!DataFile.open(QIODevice::ReadWrite | QIODevice::Text))
+    {
+        SendToLogs("Not opened");
+        return;
+    }
+    if(DataFile.exists())
+        SendToLogs("It exists");
+
+    QTextStream out(&DataFile);
+    out << "L\tX\tY\n--------------------------\n";
+    for(int i = 0; i < m_L.size(); i++)
+    {
+        out << m_L[i] << "\t" << m_X[i] << "\t" << m_Y[i] << "\n";
+    }
+    DataFile.close();
 //    DrawDataPlot();
 }
 

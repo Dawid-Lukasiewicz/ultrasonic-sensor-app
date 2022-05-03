@@ -4,7 +4,14 @@
 #include <QDialog>
 #include <QSerialPort>
 #include <QDateTime>
+
+#include <QFile>
+#include <QTextStream>
+#include <iostream>
 #include "qcustomplot.h"
+
+//#include <iostream>
+//#include <fstream>
 //#include <QOpenGLWidget>
 
 namespace Ui {
