@@ -12,8 +12,17 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     ui->MeasureWindowPlot->graph(0)->setPen(QPen(Qt::red));
     ui->MeasureWindowPlot->xAxis->setRange(-50, 50);
     ui->MeasureWindowPlot->yAxis->setRange(0, 50);
-
     ui->MeasureWindowPlot->setInteractions(QCP::iRangeZoom | QCP::iRangeDrag | QCP::iSelectPlottables);
+
+//    Generate range of sensor
+    QVector<double> X, Y;
+    for(int i = -50; i < 51; i++)
+    {
+        X.push_back(static_cast<double>(i));
+        Y.push_back(static_cast<double>(sqrt(50*50 - i*i)));
+    }
+    ui->MeasureWindowPlot->graph(0)->setData(X, Y);
+    ui->MeasureWindowPlot->replot();
 }
 
 MeasureWindow::~MeasureWindow()
@@ -35,13 +44,17 @@ void MeasureWindow::SendToDevice(const QString &message)
 
 void MeasureWindow::DrawDataPlot(const QVector<double> &X, const QVector<double> &Y)
 {
-    ui->MeasureWindowPlot->graph(0)->setData(X, Y);
+    ui->MeasureWindowPlot->addGraph();
+    int GraphIndex = ui->MeasureWindowPlot->graphCount() - 1;
+    ui->MeasureWindowPlot->graph(GraphIndex)->setData(X, Y);
     ui->MeasureWindowPlot->replot();
 }
 
 void MeasureWindow::DrawDataPlot()
 {
-    ui->MeasureWindowPlot->graph(0)->setData(m_X, m_Y);
+    ui->MeasureWindowPlot->addGraph();
+    int GraphIndex = ui->MeasureWindowPlot->graphCount() - 1;
+    ui->MeasureWindowPlot->graph(GraphIndex)->setData(m_X, m_Y, true);
     ui->MeasureWindowPlot->replot();
 }
 
@@ -53,7 +66,6 @@ void MeasureWindow::GenerateAndDraw()
         X.push_back(static_cast<double>(i));
         Y.push_back(static_cast<double>(sqrt(50*50 - i*i)));
     }
-
     DrawDataPlot(X, Y);
 }
 
@@ -72,11 +84,11 @@ void MeasureWindow::ReadFromPort()
             m_Y.push_back(list.at(2).toDouble());
         }
     }
+    DrawDataPlot();
 }
 
 void MeasureWindow::SendToLogs(const QString &message)
 {
-    // NEED TO CHANGE THE WAY I SHOW THE DATA, NO DATETIME NEEDED I GUESS
     QString CurrentDate = QDateTime::currentDateTime().toString("hh:mm:ss -- ");
     ui->DataMeasureWindow->append(CurrentDate + " " + message);
 }
@@ -97,11 +109,9 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
 
 void MeasureWindow::on_SetLocationMeasureWindow_clicked()
 {
-    GenerateAndDraw();
-
     QString Date;
     Date += QDateTime::currentDateTime().toString("hh:mm:ss__dd.MM.yyyy");
-    QFile DataFile("/home/dawid/QT-workspace/Sensor_Project-WDS/datas/" + Date);
+    QFile DataFile("/home/dawid/QT-workspace/Sensor_Project-WDS/datas/" + Date + ".txt");
 
     if(!DataFile.open(QIODevice::ReadWrite | QIODevice::Text))
     {
@@ -118,6 +128,5 @@ void MeasureWindow::on_SetLocationMeasureWindow_clicked()
         out << m_L[i] << "\t" << m_X[i] << "\t" << m_Y[i] << "\n";
     }
     DataFile.close();
-//    DrawDataPlot();
 }
 
