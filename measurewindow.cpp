@@ -74,12 +74,14 @@ void MeasureWindow::ReadFromPort()
     while(Device->canReadLine())
     {
         QString line = Device->readLine();
-        int index_ = line.lastIndexOf("\n") - 2;
+        int __IndexRight = line.lastIndexOf("\n");
+        int __IndexLeft = __IndexRight - 1;
         if(line.at(0) == ":")
         {
-            QList<QString> list = (line+1).left(index_).split(" ");
+            QString tmp = line.right(__IndexRight);
+            QList<QString> list = tmp.left(__IndexLeft).split(" ");
             SendToLogs("L=" + list.first() + " X=" + list.at(1) + " Y=" + list.at(2));
-            m_L.push_back(list.first().toInt());
+            m_L.push_back(list.first().toDouble());
             m_X.push_back(list.at(1).toDouble());
             m_Y.push_back(list.at(2).toDouble());
         }
@@ -110,7 +112,8 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
 void MeasureWindow::on_SetLocationMeasureWindow_clicked()
 {
     QString Date;
-    Date += QDateTime::currentDateTime().toString("hh:mm:ss__dd.MM.yyyy");
+    Date += QDateTime::currentDateTime().toString("hh-mm-ss__dd.MM.yyyy");
+//    Probably gonna need to set some functions to find current directory
     QFile DataFile("/home/dawid/QT-workspace/Sensor_Project-WDS/datas/" + Date + ".txt");
 
     if(!DataFile.open(QIODevice::ReadWrite | QIODevice::Text))
@@ -119,7 +122,7 @@ void MeasureWindow::on_SetLocationMeasureWindow_clicked()
         return;
     }
     if(DataFile.exists())
-        SendToLogs("It exists");
+        SendToLogs("[INFO] Saving data to file\n" + Date + ".txt");
 
     QTextStream out(&DataFile);
     out << "L\tX\tY\n--------------------------\n";

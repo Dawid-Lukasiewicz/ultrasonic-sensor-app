@@ -10,10 +10,6 @@
 #include <iostream>
 #include "qcustomplot.h"
 
-//#include <iostream>
-//#include <fstream>
-//#include <QOpenGLWidget>
-
 namespace Ui {
 class MeasureWindow;
 }
