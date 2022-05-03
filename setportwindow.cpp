@@ -47,12 +47,12 @@ void SetPortWindow::on_Connect_clicked()
 {
     if(ui->SelectedPort->count() == 0)
     {
-        SendToLogs("[ERROR] No device found");
+        SendToLogs("[INFO] No device found");
         return;
     }
     else if(Device->isOpen())
     {
-        SendToLogs("[INFO] Port " + Device->portName() + " already opened");
+        SendToLogs("[ERROR] Port " + Device->portName() + " already opened");
         return;
     }
 
@@ -81,11 +81,11 @@ void SetPortWindow::on_Disconnect_clicked()
     if(Device->isOpen())
     {
         Device->close();
-        SendToLogs("Port disconnected");
+        SendToLogs("[INFO] Port disconnected");
     }
     else
     {
-        SendToLogs("No port connected");
+        SendToLogs("[ERROR] No port connected");
     }
 }
 
