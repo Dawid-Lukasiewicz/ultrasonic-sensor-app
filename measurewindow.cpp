@@ -52,9 +52,7 @@ void MeasureWindow::DrawDataPlot(const QVector<double> &X, const QVector<double>
 
 void MeasureWindow::DrawDataPlot()
 {
-    ui->MeasureWindowPlot->addGraph();
-    int GraphIndex = ui->MeasureWindowPlot->graphCount() - 1;
-    ui->MeasureWindowPlot->graph(GraphIndex)->setData(m_X, m_Y, true);
+    ui->MeasureWindowPlot->graph(m_GraphIndex)->setData(m_X, m_Y, true);
     ui->MeasureWindowPlot->replot();
 }
 
@@ -103,8 +101,31 @@ void MeasureWindow::on_BackMeasureWindow_clicked()
 
 void MeasureWindow::on_StartMeasureWindow_clicked()
 {
-    SendToLogs("Start");
+    SendToLogs("Start Measurement\n---------------------------");
+
+//    Clear data from vectors
+    m_L.clear();
+    m_X.clear();
+    m_Y.clear();
+
+//    See if need to remove graph
+    m_GraphIndex = ui->MeasureWindowPlot->graphCount();
+    if(m_GraphIndex >= GRAPH_COUNT)
+    {
+        for(int i = 4; i > 0; i--)
+        {
+            ui->MeasureWindowPlot->removeGraph(i);
+        }
+        m_GraphIndex = ui->MeasureWindowPlot->graphCount();
+        ui->MeasureWindowPlot->replot();
+    }
+//      Adding new graph
+    ui->MeasureWindowPlot->addGraph();
+    ui->MeasureWindowPlot->graph(m_GraphIndex)->setPen(QPen(m_GraphColourIndex[m_GraphIndex - 1]));
+
+//    Send readyRead signal to ReadFromPort slot
     connect(this->Device, SIGNAL(readyRead()), this, SLOT(ReadFromPort()));
+//    Send sensor a ready signal
     SendToDevice("1");
 }
 
@@ -122,7 +143,7 @@ void MeasureWindow::on_SetLocationMeasureWindow_clicked()
         return;
     }
     if(DataFile.exists())
-        SendToLogs("[INFO] Saving data to file\n" + Date + ".txt");
+        SendToLogs("[INFO] Saving data to file:\n" + Date + ".txt");
 
     QTextStream out(&DataFile);
     out << "L\tX\tY\n--------------------------\n";

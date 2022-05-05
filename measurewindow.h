@@ -4,12 +4,13 @@
 #include <QDialog>
 #include <QSerialPort>
 #include <QDateTime>
-
+#include <QColor>
 #include <QFile>
 #include <QTextStream>
 #include <iostream>
 #include "qcustomplot.h"
 
+#define GRAPH_COUNT 5
 namespace Ui {
 class MeasureWindow;
 }
@@ -40,6 +41,8 @@ private:
     QVector<double> m_L;
     QVector<double> m_X;
     QVector<double> m_Y;
+    QColor m_GraphColourIndex[4] = {Qt::blue, Qt::green, Qt::yellow, Qt::cyan};
+    int m_GraphIndex;
 };
 
 #endif // MEASUREWINDOW_H
