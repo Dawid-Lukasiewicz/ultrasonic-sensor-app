@@ -101,7 +101,7 @@ void MeasureWindow::on_BackMeasureWindow_clicked()
 
 void MeasureWindow::on_StartMeasureWindow_clicked()
 {
-    SendToLogs("Start Measurement\n---------------------------");
+    SendToLogs("Start Measurement\n-----------------------------------------------------------");
 
 //    Clear data from vectors
     m_L.clear();
@@ -119,12 +119,14 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
         m_GraphIndex = ui->MeasureWindowPlot->graphCount();
         ui->MeasureWindowPlot->replot();
     }
+
 //      Adding new graph
     ui->MeasureWindowPlot->addGraph();
     ui->MeasureWindowPlot->graph(m_GraphIndex)->setPen(QPen(m_GraphColourIndex[m_GraphIndex - 1]));
 
 //    Send readyRead signal to ReadFromPort slot
     connect(this->Device, SIGNAL(readyRead()), this, SLOT(ReadFromPort()));
+
 //    Send sensor a ready signal
     SendToDevice("1");
 }
