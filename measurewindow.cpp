@@ -30,6 +30,11 @@ MeasureWindow::~MeasureWindow()
     delete ui;
 }
 
+/**
+ * @brief MeasureWindow::SendToDevice Sending message to connected device
+ * @param message To be sent to device
+ * @retval None
+ */
 void MeasureWindow::SendToDevice(const QString &message)
 {
     if(Device->isOpen() && Device->isWritable())
@@ -42,6 +47,12 @@ void MeasureWindow::SendToDevice(const QString &message)
     }
 }
 
+/**
+ * @brief MeasureWindow::DrawDataPlot Drawing data on new graph
+ * @param X Vector of data
+ * @param Y Vector of data
+ * @retval None
+ */
 void MeasureWindow::DrawDataPlot(const QVector<double> &X, const QVector<double> &Y)
 {
     ui->MeasureWindowPlot->addGraph();
@@ -50,12 +61,20 @@ void MeasureWindow::DrawDataPlot(const QVector<double> &X, const QVector<double>
     ui->MeasureWindowPlot->replot();
 }
 
+/**
+ * @brief MeasureWindow::DrawDataPlot Draws plot on new graph from previously saved data in X and Y
+ * @retval None
+ */
 void MeasureWindow::DrawDataPlot()
 {
     ui->MeasureWindowPlot->graph(m_GraphIndex)->setData(m_X, m_Y, true);
     ui->MeasureWindowPlot->replot();
 }
 
+/**
+ * @brief MeasureWindow::GenerateAndDraw Draws a semicircle marking the device range
+ * @retval None
+ */
 void MeasureWindow::GenerateAndDraw()
 {
     QVector<double> X, Y;
@@ -67,6 +86,13 @@ void MeasureWindow::GenerateAndDraw()
     DrawDataPlot(X, Y);
 }
 
+/**
+ * @brief MeasureWindow::ReadFromPort Reading data
+ * from port and saving it
+ * @details The method reads from port, partitions
+ * the data frame and saving each part to assigned
+ * member vector
+ */
 void MeasureWindow::ReadFromPort()
 {
     while(Device->canReadLine())
@@ -87,18 +113,33 @@ void MeasureWindow::ReadFromPort()
     DrawDataPlot();
 }
 
+/**
+ * @brief MeasureWindow::SendToLogs Sending message to logs
+ * @param message Message to be sent
+ * @retval None
+ */
 void MeasureWindow::SendToLogs(const QString &message)
 {
     QString CurrentDate = QDateTime::currentDateTime().toString("hh:mm:ss -- ");
     ui->DataMeasureWindow->append(CurrentDate + " " + message);
 }
 
+/**
+ * @brief MeasureWindow::on_BackMeasureWindow_clicked Closes the measure window so that main window comes back
+ * @retval None
+ */
 void MeasureWindow::on_BackMeasureWindow_clicked()
 {
     this->close();
 }
 
-
+/**
+ * @brief MeasureWindow::on_StartMeasureWindow_clicked Start measurement and display it on plot
+ * @details At first clears vectors containing data from previous measurement Then checks if
+ * there are too many graphs created, if so delete them. Adding a new graph with predefined color.
+ * Sending readyRead signal to ReadFromPort methode. Send a message to device in order to start measurement
+ * @retval None
+ */
 void MeasureWindow::on_StartMeasureWindow_clicked()
 {
     SendToLogs("Start Measurement\n-----------------------------------------------------------");
