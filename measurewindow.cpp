@@ -1,6 +1,13 @@
 #include "measurewindow.h"
 #include "ui_measurewindow.h"
 
+/**
+ * @brief MeasureWindow::MeasureWindow
+ * @param parent
+ * @param device
+ * @details The constructor sets whole window and addittionaly
+ * sets the first graph to display the range of sensor as a semicircle
+ */
 MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     QDialog(parent),
     ui(new Ui::MeasureWindow),
@@ -31,7 +38,7 @@ MeasureWindow::~MeasureWindow()
 }
 
 /**
- * @brief MeasureWindow::SendToDevice Sending message to connected device
+ * @brief MeasureWindow::SendToDevice Sends message to connected device
  * @param message To be sent to device
  * @retval None
  */
