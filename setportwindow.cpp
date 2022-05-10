@@ -15,6 +15,11 @@ SetPortWindow::~SetPortWindow()
     delete Device;
 }
 
+/**
+ * @brief SetPortWindow::SendToDevice Sends message to connected device
+ * @param message To be sent to device
+ * @retval None
+ */
 void SetPortWindow::SendToDevice(const QString &message)
 {
     if(Device->isOpen() && Device->isWritable())
@@ -29,7 +34,11 @@ void SetPortWindow::SendToDevice(const QString &message)
     }
 }
 
-
+/**
+ * @brief SetPortWindow::on_Search_clicked Searches avalaible devices
+ * attached and saves it in list
+ * @retval None
+ */
 void SetPortWindow::on_Search_clicked()
 {
     QList<QSerialPortInfo> devices;
@@ -43,6 +52,10 @@ void SetPortWindow::on_Search_clicked()
 
 }
 
+/**
+ * @brief SetPortWindow::on_Connect_clicked Connect the chosen in list device
+ * @retval None
+ */
 void SetPortWindow::on_Connect_clicked()
 {
     if(ui->SelectedPort->count() == 0)
@@ -76,6 +89,10 @@ void SetPortWindow::on_Connect_clicked()
 
 }
 
+/**
+ * @brief SetPortWindow::on_Disconnect_clicked Disconnect from device
+ * @retval None
+ */
 void SetPortWindow::on_Disconnect_clicked()
 {
     if(Device->isOpen())
@@ -89,12 +106,23 @@ void SetPortWindow::on_Disconnect_clicked()
     }
 }
 
+/**
+ * @brief MeasureWindow::SendToLogs Sending message to logs
+ * @param message Message to be sent
+ * @details The message is preceded with current time in format yyyy.MM.dd hh:mm:ss --
+ * @retval None
+ */
 void SetPortWindow::SendToLogs(const QString &message)
 {
     QString CurrentDate = QDateTime::currentDateTime().toString("yyyy.MM.dd hh:mm:ss -- ");
     ui->textEditLogs->append(CurrentDate + " " + message);
 }
 
+/**
+ * @brief MeasureWindow::ReadFromPort Reading data
+ * from port and saving it
+ * @retval None
+ */
 void SetPortWindow::ReadFromPort()
 {
     while(Device->canReadLine())
@@ -106,7 +134,11 @@ void SetPortWindow::ReadFromPort()
 }
 
 
-
+/**
+ * @brief SetPortWindow::on_Measurement_clicked Hide the main
+ * window and open measurement window
+ * @retval None
+ */
 void SetPortWindow::on_Measurement_clicked()
 {
     this->hide();
@@ -118,7 +150,10 @@ void SetPortWindow::on_Measurement_clicked()
     this->show();
 }
 
-
+/**
+ * @brief SetPortWindow::on_Exit_clicked close application
+ * @retval None
+ */
 void SetPortWindow::on_Exit_clicked()
 {
     this->close();
