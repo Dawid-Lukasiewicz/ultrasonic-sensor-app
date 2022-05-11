@@ -2,11 +2,14 @@
 #include "ui_measurewindow.h"
 
 /**
- * @brief MeasureWindow::MeasureWindow
- * @param parent
- * @param device
+ * @brief Constructor of measurement window class
+ *
  * @details The constructor sets whole window and addittionaly
  * sets the first graph to display the range of sensor as a semicircle
+ *
+ * @param parent - Basic argumetn
+ *
+ * @param device - Passed device connected in main window
  */
 MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     QDialog(parent),
@@ -23,7 +26,7 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
 
 //    Generate range of sensor
     QVector<double> X, Y;
-    for(int i = -50; i < 51; i++)
+    for(int i = -50; i < 51; ++i)
     {
         X.push_back(static_cast<double>(i));
         Y.push_back(static_cast<double>(sqrt(50*50 - i*i)));
@@ -38,8 +41,10 @@ MeasureWindow::~MeasureWindow()
 }
 
 /**
- * @brief MeasureWindow::SendToDevice Sends message to connected device
- * @param message To be sent to device
+ * @brief Sends message to connected device
+ *
+ * @param message - To be sent to device
+ *
  * @retval None
  */
 void MeasureWindow::SendToDevice(const QString &message)
@@ -55,9 +60,12 @@ void MeasureWindow::SendToDevice(const QString &message)
 }
 
 /**
- * @brief MeasureWindow::DrawDataPlot Drawing data on new graph
+ * @brief Drawing data on new graph
+ *
  * @param X Vector of data
+ *
  * @param Y Vector of data
+ *
  * @retval None
  */
 void MeasureWindow::DrawDataPlot(const QVector<double> &X, const QVector<double> &Y)
@@ -69,7 +77,8 @@ void MeasureWindow::DrawDataPlot(const QVector<double> &X, const QVector<double>
 }
 
 /**
- * @brief MeasureWindow::DrawDataPlot Draws plot on new graph from previously saved data in X and Y
+ * @brief Draws plot on new graph from previously saved data in X and Y
+ *
  * @retval None
  */
 void MeasureWindow::DrawDataPlot()
@@ -79,7 +88,8 @@ void MeasureWindow::DrawDataPlot()
 }
 
 /**
- * @brief MeasureWindow::GenerateAndDraw Draws a semicircle marking the device range
+ * @brief Draws a semicircle marking the device range
+ *
  * @retval None
  */
 void MeasureWindow::GenerateAndDraw()
@@ -94,11 +104,9 @@ void MeasureWindow::GenerateAndDraw()
 }
 
 /**
- * @brief MeasureWindow::ReadFromPort Reading data
- * from port and saving it
- * @details The method reads from port, partitions
- * the data frame and saving each part to assigned
- * member vector
+ * @brief MeasureWindow::ReadFromPort Reading data from port and saving it
+ *
+ * @details The method reads from port, partitions the data frame and saving each part to assigned member vector
  */
 void MeasureWindow::ReadFromPort()
 {
@@ -121,8 +129,10 @@ void MeasureWindow::ReadFromPort()
 }
 
 /**
- * @brief MeasureWindow::SendToLogs Sending message to logs
+ * @brief Sending message to logs
+ *
  * @param message Message to be sent
+ *
  * @retval None
  */
 void MeasureWindow::SendToLogs(const QString &message)
@@ -132,7 +142,8 @@ void MeasureWindow::SendToLogs(const QString &message)
 }
 
 /**
- * @brief MeasureWindow::on_BackMeasureWindow_clicked Closes the measure window so that main window comes back
+ * @brief Closes the measure window so that main window comes back
+ *
  * @retval None
  */
 void MeasureWindow::on_BackMeasureWindow_clicked()
@@ -141,10 +152,13 @@ void MeasureWindow::on_BackMeasureWindow_clicked()
 }
 
 /**
- * @brief MeasureWindow::on_StartMeasureWindow_clicked Start measurement and display it on plot
- * @details At first clears vectors containing data from previous measurement Then checks if
- * there are too many graphs created, if so delete them. Adding a new graph with predefined color.
- * Sending readyRead signal to ReadFromPort methode. Send a message to device in order to start measurement
+ * @brief Start measurement and display it on plot
+ *
+ * @details At first clears vectors containing data from previous measurement.
+ * Then checks if there are too many graphs created, if so delete them. Adding
+ * a new graph with predefined color. Sending readyRead signal to ReadFromPort
+ * methode. Send a message to device in order to start measurement
+ *
  * @retval None
  */
 void MeasureWindow::on_StartMeasureWindow_clicked()

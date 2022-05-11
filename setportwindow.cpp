@@ -1,6 +1,11 @@
 #include "setportwindow.h"
 #include "ui_setportwindow.h"
 
+/**
+ * @brief Basic constructor of main window
+ *
+ * @param parent - Basic argument
+ */
 SetPortWindow::SetPortWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::SetPortWindow)
@@ -9,6 +14,9 @@ SetPortWindow::SetPortWindow(QWidget *parent)
     Device = new QSerialPort;
 }
 
+/**
+ * @brief Destructor addittionaly deletes the content of member Device pointer
+ */
 SetPortWindow::~SetPortWindow()
 {
     delete ui;
@@ -17,7 +25,9 @@ SetPortWindow::~SetPortWindow()
 
 /**
  * @brief SetPortWindow::SendToDevice Sends message to connected device
- * @param message To be sent to device
+ *
+ * @param message - To be sent to device
+ *
  * @retval None
  */
 void SetPortWindow::SendToDevice(const QString &message)
@@ -35,8 +45,8 @@ void SetPortWindow::SendToDevice(const QString &message)
 }
 
 /**
- * @brief SetPortWindow::on_Search_clicked Searches avalaible devices
- * attached and saves it in list
+ * @brief Searches avalaible devices attached and saves it in list
+ *
  * @retval None
  */
 void SetPortWindow::on_Search_clicked()
@@ -53,7 +63,8 @@ void SetPortWindow::on_Search_clicked()
 }
 
 /**
- * @brief SetPortWindow::on_Connect_clicked Connect the chosen in list device
+ * @brief Connect the chosen in list device
+ *
  * @retval None
  */
 void SetPortWindow::on_Connect_clicked()
@@ -90,7 +101,8 @@ void SetPortWindow::on_Connect_clicked()
 }
 
 /**
- * @brief SetPortWindow::on_Disconnect_clicked Disconnect from device
+ * @brief Disconnect from device
+ *
  * @retval None
  */
 void SetPortWindow::on_Disconnect_clicked()
@@ -107,9 +119,12 @@ void SetPortWindow::on_Disconnect_clicked()
 }
 
 /**
- * @brief MeasureWindow::SendToLogs Sending message to logs
- * @param message Message to be sent
+ * @brief Sending message to logs
+ *
  * @details The message is preceded with current time in format yyyy.MM.dd hh:mm:ss --
+ *
+ * @param message - Message to be sent
+ *
  * @retval None
  */
 void SetPortWindow::SendToLogs(const QString &message)
@@ -119,8 +134,8 @@ void SetPortWindow::SendToLogs(const QString &message)
 }
 
 /**
- * @brief MeasureWindow::ReadFromPort Reading data
- * from port and saving it
+ * @brief Reading data from port and saving it
+ *
  * @retval None
  */
 void SetPortWindow::ReadFromPort()
@@ -135,8 +150,8 @@ void SetPortWindow::ReadFromPort()
 
 
 /**
- * @brief SetPortWindow::on_Measurement_clicked Hide the main
- * window and open measurement window
+ * @brief Hide the main window and open measurement window
+ *
  * @retval None
  */
 void SetPortWindow::on_Measurement_clicked()
@@ -151,7 +166,8 @@ void SetPortWindow::on_Measurement_clicked()
 }
 
 /**
- * @brief SetPortWindow::on_Exit_clicked close application
+ * @brief Close application
+ *
  * @retval None
  */
 void SetPortWindow::on_Exit_clicked()
