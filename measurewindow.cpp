@@ -21,8 +21,14 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     /* Passing the selected serial port to new current window */
     Device = device;
 
+    /* Setting QLCDNumber lcdNumber parameters */
     ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
     ui->lcdNumber->setBackgroundRole(QPalette::Light);
+    ui->horizontalSlider->setMinimum(-SENSOR_RANGE);
+    ui->horizontalSlider->setMaximum(SENSOR_RANGE);
+    ui->horizontalSlider->setValue(0);
+    ui->lcdNumber->display(ui->horizontalSlider->value());
+    m_positionValue = ui->horizontalSlider->value();
 
     /* Setting first graph defining maximum sensor range */
     ui->MeasureWindowPlot->addGraph();
@@ -31,7 +37,7 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     ui->MeasureWindowPlot->yAxis->setRange(0, SENSOR_RANGE + 10);
 //    ui->MeasureWindowPlot->setInteractions(QCP::iRangeZoom | QCP::iRangeDrag | QCP::iSelectPlottables);
 
-//    Generate range of sensor
+    /* Generate range of sensor */
     QVector<double> X, Y;
     for(int i = -SENSOR_RANGE; i < SENSOR_RANGE + 1; ++i)
     {
@@ -172,12 +178,12 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
 {
     SendToLogs("Start Measurement\n-----------------------------------------------------------");
 
-//    Clear data from vectors
+    /* Clear data from vectors */
     m_L.clear();
     m_X.clear();
     m_Y.clear();
 
-//    See if need to remove graph
+    /* See if need to remove graph */
     m_GraphIndex = ui->MeasureWindowPlot->graphCount();
     if(m_GraphIndex >= GRAPH_COUNT)
     {
@@ -189,14 +195,14 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
         ui->MeasureWindowPlot->replot();
     }
 
-//      Adding new graph
+    /* Adding new graph */
     ui->MeasureWindowPlot->addGraph();
     ui->MeasureWindowPlot->graph(m_GraphIndex)->setPen(QPen(m_GraphColourIndex[m_GraphIndex - 1]));
 
-//    Send readyRead signal to ReadFromPort slot
+    /* Send readyRead signal to ReadFromPort slot */
     connect(this->Device, SIGNAL(readyRead()), this, SLOT(ReadFromPort()));
 
-//    Send sensor a ready signal
+    /* Send sensor a ready signal */
     SendToDevice("1");
 }
 
@@ -234,7 +240,7 @@ void MeasureWindow::on_SaveMeasureWindow_clicked()
 
 void MeasureWindow::on_horizontalSlider_valueChanged(int value)
 {
-    m_positionValue = value - SENSOR_RANGE;
-    ui->lcdNumber->display(m_positionValue);
+    m_positionValue = value;
+    ui->lcdNumber->display(value);
 }
 
