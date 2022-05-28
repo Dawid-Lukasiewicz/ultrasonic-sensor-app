@@ -21,6 +21,9 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     /* Passing the selected serial port to new current window */
     Device = device;
 
+    ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
+    ui->lcdNumber->setBackgroundRole(QPalette::Light);
+
     /* Setting first graph defining maximum sensor range */
     ui->MeasureWindowPlot->addGraph();
     ui->MeasureWindowPlot->graph(0)->setPen(QPen(Qt::red));
@@ -226,5 +229,11 @@ void MeasureWindow::on_SaveMeasureWindow_clicked()
         out << m_L[i] << "\t" << m_X[i] << "\t" << m_Y[i] << "\n";
     }
     DataFile.close();
+}
+
+
+void MeasureWindow::on_horizontalSlider_valueChanged(int value)
+{
+    ui->lcdNumber->display(value-50);
 }
 

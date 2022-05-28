@@ -11,6 +11,7 @@
 #include "qcustomplot.h"
 
 #define GRAPH_COUNT 5
+
 namespace Ui {
 class MeasureWindow;
 }
@@ -37,9 +38,12 @@ private slots:
 
     void on_SaveMeasureWindow_clicked();
 
+    void on_horizontalSlider_valueChanged(int value);
+
 private:
     Ui::MeasureWindow *ui;
     QSerialPort *Device;
+    int m_positionValue;
     QVector<double> m_L;
     QVector<double> m_X;
     QVector<double> m_Y;
