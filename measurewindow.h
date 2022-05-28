@@ -35,6 +35,8 @@ private slots:
 
     void on_SetLocationMeasureWindow_clicked();
 
+    void on_SaveMeasureWindow_clicked();
+
 private:
     Ui::MeasureWindow *ui;
     QSerialPort *Device;

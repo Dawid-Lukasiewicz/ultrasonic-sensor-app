@@ -22,7 +22,7 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     ui->MeasureWindowPlot->graph(0)->setPen(QPen(Qt::red));
     ui->MeasureWindowPlot->xAxis->setRange(-50, 50);
     ui->MeasureWindowPlot->yAxis->setRange(0, 50);
-    ui->MeasureWindowPlot->setInteractions(QCP::iRangeZoom | QCP::iRangeDrag | QCP::iSelectPlottables);
+//    ui->MeasureWindowPlot->setInteractions(QCP::iRangeZoom | QCP::iRangeDrag | QCP::iSelectPlottables);
 
 //    Generate range of sensor
     QVector<double> X, Y;
@@ -195,6 +195,12 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
 
 
 void MeasureWindow::on_SetLocationMeasureWindow_clicked()
+{
+
+}
+
+
+void MeasureWindow::on_SaveMeasureWindow_clicked()
 {
     QString Date;
     Date += QDateTime::currentDateTime().toString("hh-mm-ss__dd.MM.yyyy");
