@@ -7,7 +7,7 @@
  * @details The constructor sets whole window and addittionaly
  * sets the first graph to display the range of sensor as a semicircle
  *
- * @param parent - Basic argumetn
+ * @param parent - Basic argument
  *
  * @param device - Passed device connected in main window
  */
@@ -17,7 +17,11 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     Device(new QSerialPort)
 {
     ui->setupUi(this);
+
+    /* Passing the selected serial port to new current window */
     Device = device;
+
+    /* Setting first graph defining maximum sensor range */
     ui->MeasureWindowPlot->addGraph();
     ui->MeasureWindowPlot->graph(0)->setPen(QPen(Qt::red));
     ui->MeasureWindowPlot->xAxis->setRange(-50, 50);
