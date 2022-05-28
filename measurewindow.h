@@ -11,6 +11,7 @@
 #include "qcustomplot.h"
 
 #define GRAPH_COUNT 5
+#define SENSOR_RANGE 100
 
 namespace Ui {
 class MeasureWindow;

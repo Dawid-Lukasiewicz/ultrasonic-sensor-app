@@ -27,16 +27,16 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     /* Setting first graph defining maximum sensor range */
     ui->MeasureWindowPlot->addGraph();
     ui->MeasureWindowPlot->graph(0)->setPen(QPen(Qt::red));
-    ui->MeasureWindowPlot->xAxis->setRange(-50, 50);
-    ui->MeasureWindowPlot->yAxis->setRange(0, 50);
+    ui->MeasureWindowPlot->xAxis->setRange(-SENSOR_RANGE - 10, SENSOR_RANGE + 10);
+    ui->MeasureWindowPlot->yAxis->setRange(0, SENSOR_RANGE + 10);
 //    ui->MeasureWindowPlot->setInteractions(QCP::iRangeZoom | QCP::iRangeDrag | QCP::iSelectPlottables);
 
 //    Generate range of sensor
     QVector<double> X, Y;
-    for(int i = -50; i < 51; ++i)
+    for(int i = -SENSOR_RANGE; i < SENSOR_RANGE + 1; ++i)
     {
         X.push_back(static_cast<double>(i));
-        Y.push_back(static_cast<double>(sqrt(50*50 - i*i)));
+        Y.push_back(static_cast<double>(sqrt(SENSOR_RANGE*SENSOR_RANGE - i*i)));
     }
     ui->MeasureWindowPlot->graph(0)->setData(X, Y);
     ui->MeasureWindowPlot->replot();
@@ -102,10 +102,10 @@ void MeasureWindow::DrawDataPlot()
 void MeasureWindow::GenerateAndDraw()
 {
     QVector<double> X, Y;
-    for(int i = -50; i < 51; i++)
+    for(int i = -SENSOR_RANGE; i < SENSOR_RANGE + 1; i++)
     {
         X.push_back(static_cast<double>(i));
-        Y.push_back(static_cast<double>(sqrt(50*50 - i*i)));
+        Y.push_back(static_cast<double>(sqrt(SENSOR_RANGE*SENSOR_RANGE - i*i)));
     }
     DrawDataPlot(X, Y);
 }
@@ -234,6 +234,7 @@ void MeasureWindow::on_SaveMeasureWindow_clicked()
 
 void MeasureWindow::on_horizontalSlider_valueChanged(int value)
 {
-    ui->lcdNumber->display(value-50);
+    m_positionValue = value - SENSOR_RANGE;
+    ui->lcdNumber->display(m_positionValue);
 }
 
