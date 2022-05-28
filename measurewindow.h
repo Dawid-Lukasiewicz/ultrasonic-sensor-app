@@ -44,7 +44,10 @@ private slots:
 private:
     Ui::MeasureWindow *ui;
     QSerialPort *Device;
+
     int m_positionValue;
+    QCPItemEllipse *m_sensorPosition;
+
     QVector<double> m_L;
     QVector<double> m_X;
     QVector<double> m_Y;

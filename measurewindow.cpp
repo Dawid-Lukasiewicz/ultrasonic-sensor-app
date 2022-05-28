@@ -21,14 +21,13 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     /* Passing the selected serial port to new current window */
     Device = device;
 
-    /* Setting QLCDNumber lcdNumber parameters */
+    /* Setting QLCDNumber lcdNumber parameters and Qslider horizontalSlider */
     ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
     ui->lcdNumber->setBackgroundRole(QPalette::Light);
     ui->horizontalSlider->setMinimum(-SENSOR_RANGE);
     ui->horizontalSlider->setMaximum(SENSOR_RANGE);
     ui->horizontalSlider->setValue(0);
     ui->lcdNumber->display(ui->horizontalSlider->value());
-    m_positionValue = ui->horizontalSlider->value();
 
     /* Setting first graph defining maximum sensor range */
     ui->MeasureWindowPlot->addGraph();
@@ -37,6 +36,19 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     ui->MeasureWindowPlot->yAxis->setRange(0, SENSOR_RANGE + 10);
 //    ui->MeasureWindowPlot->setInteractions(QCP::iRangeZoom | QCP::iRangeDrag | QCP::iSelectPlottables);
 
+    /* Draw sensor current position */
+    m_positionValue = ui->horizontalSlider->value();
+    m_sensorPosition = new QCPItemEllipse(ui->MeasureWindowPlot);
+    m_sensorPosition->setPen(QPen(Qt::black));
+    m_sensorPosition->setBrush(QBrush(Qt::red));
+
+//    NEED TO SET POSITION OF ELLIPSE WHICH SHOWS SENSOR POSITION
+//    QCPItemPosition *topX = QCPAbstractItem::createPosition();
+//    m_sensorPosition->topLeft->setTypeX(QCPItemPosition());
+//    m_sensorPosition->topLeft->setTypeY(5);
+//    m_sensorPosition->bottomRight->setTypeX(5);
+//    m_sensorPosition->bottomRight->setTypeY(-5);
+
     /* Generate range of sensor */
     QVector<double> X, Y;
     for(int i = -SENSOR_RANGE; i < SENSOR_RANGE + 1; ++i)
@@ -44,7 +56,7 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
         X.push_back(static_cast<double>(i));
         Y.push_back(static_cast<double>(sqrt(SENSOR_RANGE*SENSOR_RANGE - i*i)));
     }
-    ui->MeasureWindowPlot->graph(0)->setData(X, Y);
+    ui->MeasureWindowPlot->graph(0)->setData(X, Y, true);
     ui->MeasureWindowPlot->replot();
 }
 
