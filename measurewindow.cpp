@@ -41,8 +41,18 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     m_sensorPosition = new QCPItemEllipse(ui->MeasureWindowPlot);
     m_sensorPosition->setPen(QPen(Qt::black));
     m_sensorPosition->setBrush(QBrush(Qt::red));
-    m_sensorPosition->topLeft->setCoords(m_positionValue - SENSOR_ELLIPSE, SENSOR_ELLIPSE);
-    m_sensorPosition->bottomRight->setCoords(m_positionValue + SENSOR_ELLIPSE, -SENSOR_ELLIPSE);
+    m_sensorPosition->topLeft->setType(QCPItemPosition::ptAbsolute);
+    m_sensorPosition->bottomRight->setType(QCPItemPosition::ptAbsolute);
+    QCPItemTracer *ellipseCenter = new QCPItemTracer(ui->MeasureWindowPlot);
+    ellipseCenter->setStyle(QCPItemTracer::tsNone);
+    m_sensorPosition->topLeft->setParentAnchor(ellipseCenter->position);
+    m_sensorPosition->bottomRight->setParentAnchor(ellipseCenter->position);
+    m_sensorPosition->topLeft->setCoords(-SENSOR_ELLIPSE/2, -SENSOR_ELLIPSE/2);
+    m_sensorPosition->bottomRight->setCoords(SENSOR_ELLIPSE/2, SENSOR_ELLIPSE/2);
+    ellipseCenter->position->setCoords(0, 0);
+//    m_sensorPosition->topLeft->setCoords(m_positionValue - SENSOR_ELLIPSE, SENSOR_ELLIPSE);
+//    m_sensorPosition->bottomRight->setCoords(m_positionValue + SENSOR_ELLIPSE, -SENSOR_ELLIPSE);
+
 
     /* Generate range of sensor */
     QVector<double> X, Y;
@@ -249,7 +259,14 @@ void MeasureWindow::on_horizontalSlider_valueChanged(int value)
 {
     m_positionValue = value;
     ui->lcdNumber->display(value);
-    m_sensorPosition->topLeft->setCoords(value - SENSOR_ELLIPSE, SENSOR_ELLIPSE);
-    m_sensorPosition->bottomRight->setCoords(value + SENSOR_ELLIPSE, -SENSOR_ELLIPSE);
+//    m_sensorPosition->moveCenter(value, 0);
+
+//    ui->MeasureWindowPlot->removeItem(m_sensorPosition);
+
+//    m_sensorPosition = new QCPItemEllipse(ui->MeasureWindowPlot);
+//    m_sensorPosition->setPen(QPen(Qt::black));
+//    m_sensorPosition->setBrush(QBrush(Qt::red));
+//    m_sensorPosition->topLeft->setCoords(value - SENSOR_ELLIPSE, SENSOR_ELLIPSE);
+//    m_sensorPosition->bottomRight->setCoords(value + SENSOR_ELLIPSE, -SENSOR_ELLIPSE);
 }
 
