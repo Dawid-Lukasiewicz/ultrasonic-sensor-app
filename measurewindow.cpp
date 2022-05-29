@@ -145,15 +145,26 @@ void MeasureWindow::ReadFromPort()
         QString line = Device->readLine();
         int __IndexRight = line.lastIndexOf("\n");
         int __IndexLeft = __IndexRight - 1;
+        double radianValue = 0.0;
         if(line.at(0) == ":")
         {
             QString tmp = line.right(__IndexRight);
             QList<QString> list = tmp.left(__IndexLeft).split(" ");
-            SendToLogs("L=" + list.first() + " X=" + list.at(1) + " Y=" + list.at(2));
             m_L.push_back(list.first().toDouble());
-            m_X.push_back(list.at(1).toDouble());
-            m_Y.push_back(list.at(2).toDouble());
+            radianValue = list.at(1).toDouble();
         }
+        if(m_L.last() > SENSOR_RANGE)
+        {
+            m_L.last() = (double)SENSOR_RANGE;
+            m_X.push_back( (double)SENSOR_RANGE * cos(radianValue) );
+            m_Y.push_back( (double)SENSOR_RANGE * sin(radianValue) );
+        }
+        else
+        {
+            m_X.push_back( m_L.last() * cos(radianValue) );
+            m_Y.push_back( m_L.last() * sin(radianValue) );
+        }
+        SendToLogs("L=" + QString::number(m_L.last(), 'g', 2) + " X=" + QString::number(m_X.last(), 'g', 2) + " Y=" + QString::number(m_Y.last(), 'g', 2));
     }
     DrawDataPlot();
 }
@@ -259,7 +270,6 @@ void MeasureWindow::on_horizontalSlider_valueChanged(int value)
 {
     m_positionValue = value;
     ui->lcdNumber->display(value);
-//    m_sensorPosition->moveCenter(value, 0);
 
 //    ui->MeasureWindowPlot->removeItem(m_sensorPosition);
 
