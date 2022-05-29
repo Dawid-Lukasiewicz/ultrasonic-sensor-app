@@ -12,6 +12,7 @@
 
 #define GRAPH_COUNT 5
 #define SENSOR_RANGE 50
+#define SENSOR_ELLIPSE 2
 
 namespace Ui {
 class MeasureWindow;

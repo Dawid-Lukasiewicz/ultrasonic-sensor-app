@@ -41,13 +41,8 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     m_sensorPosition = new QCPItemEllipse(ui->MeasureWindowPlot);
     m_sensorPosition->setPen(QPen(Qt::black));
     m_sensorPosition->setBrush(QBrush(Qt::red));
-
-//    NEED TO SET POSITION OF ELLIPSE WHICH SHOWS SENSOR POSITION
-//    QCPItemPosition *topX = QCPAbstractItem::createPosition();
-//    m_sensorPosition->topLeft->setTypeX(QCPItemPosition());
-//    m_sensorPosition->topLeft->setTypeY(5);
-//    m_sensorPosition->bottomRight->setTypeX(5);
-//    m_sensorPosition->bottomRight->setTypeY(-5);
+    m_sensorPosition->topLeft->setCoords(m_positionValue - SENSOR_ELLIPSE, SENSOR_ELLIPSE);
+    m_sensorPosition->bottomRight->setCoords(m_positionValue + SENSOR_ELLIPSE, -SENSOR_ELLIPSE);
 
     /* Generate range of sensor */
     QVector<double> X, Y;
@@ -254,5 +249,7 @@ void MeasureWindow::on_horizontalSlider_valueChanged(int value)
 {
     m_positionValue = value;
     ui->lcdNumber->display(value);
+    m_sensorPosition->topLeft->setCoords(value - SENSOR_ELLIPSE, SENSOR_ELLIPSE);
+    m_sensorPosition->bottomRight->setCoords(value + SENSOR_ELLIPSE, -SENSOR_ELLIPSE);
 }
 
