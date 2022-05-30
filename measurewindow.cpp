@@ -6,6 +6,8 @@
  *
  * @details The constructor sets whole window and addittionaly
  * sets the first graph to display the range of sensor as a semicircle
+ * draws ellipse indicating default localization of sensor
+ * additionally sets range for slider and its default value
  *
  * @param parent - Basic argument
  *
@@ -56,8 +58,12 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     ui->MeasureWindowPlot->replot();
 }
 
+/**
+ * @brief Deleting dynamically allocated memory
+ */
 MeasureWindow::~MeasureWindow()
 {
+    delete m_sensorPosition;
     delete ui;
 }
 
@@ -226,13 +232,14 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
     SendToDevice("1");
 }
 
-
-void MeasureWindow::on_SetLocationMeasureWindow_clicked()
-{
-    m_positionValue = ui->horizontalSlider->value();
-}
-
-
+/**
+ * @brief Save measured data to file
+ *
+ * @note File name format is "hh-mm-ss__dd.MM.yyyy.txt
+ *      Data format is Length[cm]   X_position[cm]  Y_position[cm]
+ *
+ * @retval None
+ */
 void MeasureWindow::on_SaveMeasureWindow_clicked()
 {
     QString Date;
@@ -249,7 +256,7 @@ void MeasureWindow::on_SaveMeasureWindow_clicked()
         SendToLogs("[INFO] Saving data to file:\n" + Date + ".txt");
 
     QTextStream out(&DataFile);
-    out << "L\tX\tY\n--------------------------\n";
+    out << "L[cm]\tX[cm]\tY[cm]\n--------------------------\n";
     for(int i = 0; i < m_L.size(); i++)
     {
         out << m_L[i] << "\t" << m_X[i] << "\t" << m_Y[i] << "\n";
@@ -257,9 +264,16 @@ void MeasureWindow::on_SaveMeasureWindow_clicked()
     DataFile.close();
 }
 
-
+/**
+ * @brief Changing sensor localization vizualization and applying the changed value to coords calculation
+ *
+ * @param value new value of sensor localization
+ *
+ * @retval None
+ */
 void MeasureWindow::on_horizontalSlider_valueChanged(int value)
 {
+    m_positionValue = value;
     ui->lcdNumber->display(value);
     m_sensorPosition->topLeft->setCoords(value - SENSOR_ELLIPSE, SENSOR_ELLIPSE);
     m_sensorPosition->bottomRight->setCoords(value + SENSOR_ELLIPSE, -SENSOR_ELLIPSE);

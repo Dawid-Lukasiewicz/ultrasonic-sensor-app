@@ -12,7 +12,7 @@
 #include "qcustomplot.h"
 
 #define GRAPH_COUNT 5
-#define SENSOR_RANGE 50
+#define SENSOR_RANGE 100
 #define SENSOR_ELLIPSE 2
 
 namespace Ui {
@@ -36,8 +36,6 @@ private slots:
     void SendToLogs(const QString &message);
     void on_BackMeasureWindow_clicked();
     void on_StartMeasureWindow_clicked();
-
-    void on_SetLocationMeasureWindow_clicked();
 
     void on_SaveMeasureWindow_clicked();
 
