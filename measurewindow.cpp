@@ -130,9 +130,11 @@ void MeasureWindow::GenerateAndDraw()
 }
 
 /**
- * @brief MeasureWindow::ReadFromPort Reading data from port and saving it
+ * @brief Reading data from port and saving it
  *
  * @details The method reads from port, partitions the data frame and saving each part to assigned member vector
+ *
+ * @retval None
  */
 void MeasureWindow::ReadFromPort()
 {
