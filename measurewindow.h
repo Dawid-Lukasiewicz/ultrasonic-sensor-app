@@ -48,7 +48,6 @@ private:
     QSerialPort *Device;
 
     int m_positionValue;
-    QCPItemTracer *ellipseCenter;
     QCPItemEllipse *m_sensorPosition;
 
     QVector<double> m_L;
