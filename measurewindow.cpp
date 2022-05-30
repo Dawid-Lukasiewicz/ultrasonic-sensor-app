@@ -153,16 +153,16 @@ void MeasureWindow::ReadFromPort()
             m_L.push_back(list.first().toDouble());
             radianValue = list.at(1).toDouble();
         }
-        if(m_L.last() > SENSOR_RANGE)
+        m_X.push_back( m_L.last() * cos(radianValue) + m_positionValue);
+        m_Y.push_back( m_L.last() * sin(radianValue) );
+        // This while loop is poorly designed
+        while( sqrt( pow(m_X.last(), 2) + pow(m_Y.last(), 2) ) > SENSOR_RANGE)
         {
-            m_L.last() = (double)SENSOR_RANGE;
-            m_X.push_back( (double)SENSOR_RANGE * cos(radianValue) );
-            m_Y.push_back( (double)SENSOR_RANGE * sin(radianValue) );
-        }
-        else
-        {
-            m_X.push_back( m_L.last() * cos(radianValue) );
-            m_Y.push_back( m_L.last() * sin(radianValue) );
+            m_L.last() -= 0.5;
+            m_X.last() =  m_L.last() * cos(radianValue) + m_positionValue;
+            m_Y.last() =  m_L.last() * sin(radianValue);
+            if(m_L.last() < 0.5)
+                m_L.last() = 0.0;
         }
         SendToLogs("L=" + QString::number(m_L.last(), 'g', 2) + " X=" + QString::number(m_X.last(), 'g', 2) + " Y=" + QString::number(m_Y.last(), 'g', 2));
     }
