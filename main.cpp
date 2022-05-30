@@ -18,6 +18,7 @@ int main(int argc, char *argv[])
         }
     }
     SetPortWindow w;
+    w.setWindowTitle("Setting Serial Port Window");
     w.move(QApplication::desktop()->screen()->rect().center()
            -w.rect().center());
     w.show();

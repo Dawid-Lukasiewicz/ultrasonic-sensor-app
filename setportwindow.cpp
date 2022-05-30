@@ -159,6 +159,7 @@ void SetPortWindow::on_Measurement_clicked()
     this->hide();
 
     MeasureWindow ui_m(nullptr, this->Device);
+    ui_m.setWindowTitle("Measurement Window");
     ui_m.setModal(true);
     ui_m.exec();
 
