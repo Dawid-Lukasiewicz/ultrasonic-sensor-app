@@ -161,7 +161,7 @@ void MeasureWindow::ReadFromPort()
             m_X.last() =  m_L.last() * cos(radianValue) + m_positionValue;
             m_Y.last() =  m_L.last() * sin(radianValue);
         }
-        SendToLogs("L=" + QString::number(m_L.last(), 'g', 2) + " X=" + QString::number(m_X.last(), 'g', 2) + " Y=" + QString::number(m_Y.last(), 'g', 2));
+        SendToLogs("L=" + QString::number(m_L.last(), 'g', 3) + " X=" + QString::number(m_X.last(), 'g', 3) + " Y=" + QString::number(m_Y.last(), 'g', 3));
     }
     DrawDataPlot();
 }
@@ -241,11 +241,19 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
  */
 void MeasureWindow::on_SaveMeasureWindow_clicked()
 {
+    /* Getting current date and saving to variable */
     QString Date;
     Date += QDateTime::currentDateTime().toString("hh-mm-ss__dd.MM.yyyy");
-//    Probably gonna need to set some functions to find current directory
-    QFile DataFile("/home/dawid/QT-workspace/Sensor_Project-WDS/datas/" + Date + ".txt");
 
+    /* Getting current path, moving to parent directory and creating "/datas/ direcotry if not existing */
+    QDir dataDirectory(QDir().path());
+    dataDirectory.cdUp();
+    dataDirectory.mkdir(dataDirectory.path() + "/datas/");
+
+    /* Creating file with current date name */
+    QFile DataFile(dataDirectory.path() + "/datas/" + Date + ".txt");
+
+    /* Opening file and then saving data in it */
     if(!DataFile.open(QIODevice::ReadWrite | QIODevice::Text))
     {
         SendToLogs("Not opened");
@@ -255,6 +263,7 @@ void MeasureWindow::on_SaveMeasureWindow_clicked()
         SendToLogs("[INFO] Saving data to file:\n" + Date + ".txt");
 
     QTextStream out(&DataFile);
+    out.setRealNumberPrecision(3);
     out << "L[cm]\tX[cm]\tY[cm]\n--------------------------\n";
     for(int i = 0; i < m_L.size(); i++)
     {
