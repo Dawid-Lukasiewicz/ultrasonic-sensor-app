@@ -59,11 +59,10 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
 }
 
 /**
- * @brief Deleting dynamically allocated memory
+ * @brief Deleting user interface class
  */
 MeasureWindow::~MeasureWindow()
 {
-    delete m_sensorPosition;
     delete ui;
 }
 
