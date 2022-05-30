@@ -7,7 +7,7 @@
  * @details The constructor sets whole window and addittionaly
  * sets the first graph to display the range of sensor as a semicircle
  *
- * @param parent - Basic argumetn
+ * @param parent - Basic argument
  *
  * @param device - Passed device connected in main window
  */
@@ -17,21 +17,51 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     Device(new QSerialPort)
 {
     ui->setupUi(this);
+
+    /* Passing the selected serial port to new current window */
     Device = device;
+
+    /* Setting QLCDNumber lcdNumber parameters and Qslider horizontalSlider */
+    ui->lcdNumber->setSegmentStyle(QLCDNumber::Flat);
+    ui->lcdNumber->setBackgroundRole(QPalette::Light);
+    ui->horizontalSlider->setMinimum(-SENSOR_RANGE);
+    ui->horizontalSlider->setMaximum(SENSOR_RANGE);
+    ui->horizontalSlider->setValue(0);
+    ui->lcdNumber->display(ui->horizontalSlider->value());
+
+    /* Setting first graph defining maximum sensor range */
     ui->MeasureWindowPlot->addGraph();
     ui->MeasureWindowPlot->graph(0)->setPen(QPen(Qt::red));
-    ui->MeasureWindowPlot->xAxis->setRange(-50, 50);
-    ui->MeasureWindowPlot->yAxis->setRange(0, 50);
-    ui->MeasureWindowPlot->setInteractions(QCP::iRangeZoom | QCP::iRangeDrag | QCP::iSelectPlottables);
+    ui->MeasureWindowPlot->xAxis->setRange(-SENSOR_RANGE - 10, SENSOR_RANGE + 10);
+    ui->MeasureWindowPlot->yAxis->setRange(0, SENSOR_RANGE + 10);
+//    ui->MeasureWindowPlot->setInteractions(QCP::iRangeZoom | QCP::iRangeDrag | QCP::iSelectPlottables);
 
-//    Generate range of sensor
+    /* Draw sensor current position */
+    m_positionValue = ui->horizontalSlider->value();
+    m_sensorPosition = new QCPItemEllipse(ui->MeasureWindowPlot);
+    m_sensorPosition->setPen(QPen(Qt::black));
+    m_sensorPosition->setBrush(QBrush(Qt::red));
+    m_sensorPosition->topLeft->setType(QCPItemPosition::ptAbsolute);
+    m_sensorPosition->bottomRight->setType(QCPItemPosition::ptAbsolute);
+    QCPItemTracer *ellipseCenter = new QCPItemTracer(ui->MeasureWindowPlot);
+    ellipseCenter->setStyle(QCPItemTracer::tsNone);
+    m_sensorPosition->topLeft->setParentAnchor(ellipseCenter->position);
+    m_sensorPosition->bottomRight->setParentAnchor(ellipseCenter->position);
+    m_sensorPosition->topLeft->setCoords(-SENSOR_ELLIPSE/2, -SENSOR_ELLIPSE/2);
+    m_sensorPosition->bottomRight->setCoords(SENSOR_ELLIPSE/2, SENSOR_ELLIPSE/2);
+    ellipseCenter->position->setCoords(0, 0);
+//    m_sensorPosition->topLeft->setCoords(m_positionValue - SENSOR_ELLIPSE, SENSOR_ELLIPSE);
+//    m_sensorPosition->bottomRight->setCoords(m_positionValue + SENSOR_ELLIPSE, -SENSOR_ELLIPSE);
+
+
+    /* Generate range of sensor */
     QVector<double> X, Y;
-    for(int i = -50; i < 51; ++i)
+    for(int i = -SENSOR_RANGE; i < SENSOR_RANGE + 1; ++i)
     {
         X.push_back(static_cast<double>(i));
-        Y.push_back(static_cast<double>(sqrt(50*50 - i*i)));
+        Y.push_back(static_cast<double>(sqrt(SENSOR_RANGE*SENSOR_RANGE - i*i)));
     }
-    ui->MeasureWindowPlot->graph(0)->setData(X, Y);
+    ui->MeasureWindowPlot->graph(0)->setData(X, Y, true);
     ui->MeasureWindowPlot->replot();
 }
 
@@ -95,10 +125,10 @@ void MeasureWindow::DrawDataPlot()
 void MeasureWindow::GenerateAndDraw()
 {
     QVector<double> X, Y;
-    for(int i = -50; i < 51; i++)
+    for(int i = -SENSOR_RANGE; i < SENSOR_RANGE + 1; i++)
     {
         X.push_back(static_cast<double>(i));
-        Y.push_back(static_cast<double>(sqrt(50*50 - i*i)));
+        Y.push_back(static_cast<double>(sqrt(SENSOR_RANGE*SENSOR_RANGE - i*i)));
     }
     DrawDataPlot(X, Y);
 }
@@ -115,15 +145,26 @@ void MeasureWindow::ReadFromPort()
         QString line = Device->readLine();
         int __IndexRight = line.lastIndexOf("\n");
         int __IndexLeft = __IndexRight - 1;
+        double radianValue = 0.0;
         if(line.at(0) == ":")
         {
             QString tmp = line.right(__IndexRight);
             QList<QString> list = tmp.left(__IndexLeft).split(" ");
-            SendToLogs("L=" + list.first() + " X=" + list.at(1) + " Y=" + list.at(2));
             m_L.push_back(list.first().toDouble());
-            m_X.push_back(list.at(1).toDouble());
-            m_Y.push_back(list.at(2).toDouble());
+            radianValue = list.at(1).toDouble();
         }
+        m_X.push_back( m_L.last() * cos(radianValue) + m_positionValue);
+        m_Y.push_back( m_L.last() * sin(radianValue) );
+        // This while loop is poorly designed
+        while( sqrt( pow(m_X.last(), 2) + pow(m_Y.last(), 2) ) > SENSOR_RANGE)
+        {
+            m_L.last() -= 0.5;
+            m_X.last() =  m_L.last() * cos(radianValue) + m_positionValue;
+            m_Y.last() =  m_L.last() * sin(radianValue);
+            if(m_L.last() < 0.5)
+                m_L.last() = 0.0;
+        }
+        SendToLogs("L=" + QString::number(m_L.last(), 'g', 2) + " X=" + QString::number(m_X.last(), 'g', 2) + " Y=" + QString::number(m_Y.last(), 'g', 2));
     }
     DrawDataPlot();
 }
@@ -165,12 +206,12 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
 {
     SendToLogs("Start Measurement\n-----------------------------------------------------------");
 
-//    Clear data from vectors
+    /* Clear data from vectors */
     m_L.clear();
     m_X.clear();
     m_Y.clear();
 
-//    See if need to remove graph
+    /* See if need to remove graph */
     m_GraphIndex = ui->MeasureWindowPlot->graphCount();
     if(m_GraphIndex >= GRAPH_COUNT)
     {
@@ -182,19 +223,25 @@ void MeasureWindow::on_StartMeasureWindow_clicked()
         ui->MeasureWindowPlot->replot();
     }
 
-//      Adding new graph
+    /* Adding new graph */
     ui->MeasureWindowPlot->addGraph();
     ui->MeasureWindowPlot->graph(m_GraphIndex)->setPen(QPen(m_GraphColourIndex[m_GraphIndex - 1]));
 
-//    Send readyRead signal to ReadFromPort slot
+    /* Send readyRead signal to ReadFromPort slot */
     connect(this->Device, SIGNAL(readyRead()), this, SLOT(ReadFromPort()));
 
-//    Send sensor a ready signal
+    /* Send sensor a ready signal */
     SendToDevice("1");
 }
 
 
 void MeasureWindow::on_SetLocationMeasureWindow_clicked()
+{
+
+}
+
+
+void MeasureWindow::on_SaveMeasureWindow_clicked()
 {
     QString Date;
     Date += QDateTime::currentDateTime().toString("hh-mm-ss__dd.MM.yyyy");
@@ -216,5 +263,20 @@ void MeasureWindow::on_SetLocationMeasureWindow_clicked()
         out << m_L[i] << "\t" << m_X[i] << "\t" << m_Y[i] << "\n";
     }
     DataFile.close();
+}
+
+
+void MeasureWindow::on_horizontalSlider_valueChanged(int value)
+{
+    m_positionValue = value;
+    ui->lcdNumber->display(value);
+
+//    ui->MeasureWindowPlot->removeItem(m_sensorPosition);
+
+//    m_sensorPosition = new QCPItemEllipse(ui->MeasureWindowPlot);
+//    m_sensorPosition->setPen(QPen(Qt::black));
+//    m_sensorPosition->setBrush(QBrush(Qt::red));
+//    m_sensorPosition->topLeft->setCoords(value - SENSOR_ELLIPSE, SENSOR_ELLIPSE);
+//    m_sensorPosition->bottomRight->setCoords(value + SENSOR_ELLIPSE, -SENSOR_ELLIPSE);
 }
 

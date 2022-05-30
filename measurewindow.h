@@ -7,10 +7,14 @@
 #include <QColor>
 #include <QFile>
 #include <QTextStream>
+#include <QDebug>
 #include <iostream>
 #include "qcustomplot.h"
 
 #define GRAPH_COUNT 5
+#define SENSOR_RANGE 50
+#define SENSOR_ELLIPSE 2
+
 namespace Ui {
 class MeasureWindow;
 }
@@ -35,9 +39,18 @@ private slots:
 
     void on_SetLocationMeasureWindow_clicked();
 
+    void on_SaveMeasureWindow_clicked();
+
+    void on_horizontalSlider_valueChanged(int value);
+
 private:
     Ui::MeasureWindow *ui;
     QSerialPort *Device;
+
+    int m_positionValue;
+    QCPItemTracer *ellipseCenter;
+    QCPItemEllipse *m_sensorPosition;
+
     QVector<double> m_L;
     QVector<double> m_X;
     QVector<double> m_Y;
