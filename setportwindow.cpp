@@ -34,7 +34,7 @@ void SetPortWindow::SendToDevice(const QString &message)
 {
     if(Device->isOpen() && Device->isWritable())
     {
-        SendToLogs(message);
+        SendToLogs(tr(message.toStdString().c_str()));
         Device->write(message.toStdString().c_str());
     }
     else
@@ -56,7 +56,7 @@ void SetPortWindow::on_Search_clicked()
     ui->SelectedPort->clear();
     for(int i = 0; i < devices.count(); i++)
     {
-        SendToLogs("[INFO] " + devices.at(i).portName() + "  " + devices.at(i).description());
+        SendToLogs(tr( ("[INFO] " + devices.at(i).portName() + "  " + devices.at(i).description()).toStdString().c_str() ));
         ui->SelectedPort->addItem(devices.at(i).portName() + "  " + devices.at(i).description());
     }
 
