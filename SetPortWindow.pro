@@ -24,7 +24,8 @@ FORMS += \
     setportwindow.ui
 
 TRANSLATIONS += \
-    SetPortWindow_en_150.ts
+    SetPortWindow_en_150.ts \
+    SetPortWindow_pl.ts
 CONFIG += lrelease
 CONFIG += embed_translations
 

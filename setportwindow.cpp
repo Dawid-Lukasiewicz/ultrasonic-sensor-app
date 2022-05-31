@@ -39,7 +39,7 @@ void SetPortWindow::SendToDevice(const QString &message)
     }
     else
     {
-        SendToLogs("[ERROR] Failed to send message to device");
+        SendToLogs(tr("[ERROR] Failed to send message to device"));
         return;
     }
 }
