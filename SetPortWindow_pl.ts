@@ -86,5 +86,10 @@
         <source>[ERROR] Failed to send message to device</source>
         <translation>[Porażka] Nie powodzenie wysłaniu wiadomości do urządzenia</translation>
     </message>
+    <message>
+        <location filename="setportwindow.cpp" line="74"/>
+        <source>[INFO] No device found</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

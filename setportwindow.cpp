@@ -34,7 +34,7 @@ void SetPortWindow::SendToDevice(const QString &message)
 {
     if(Device->isOpen() && Device->isWritable())
     {
-        SendToLogs(tr(message.toStdString().c_str()));
+        SendToLogs(message);
         Device->write(message.toStdString().c_str());
     }
     else
@@ -71,7 +71,7 @@ void SetPortWindow::on_Connect_clicked()
 {
     if(ui->SelectedPort->count() == 0)
     {
-        SendToLogs("[INFO] No device found");
+        SendToLogs(tr("[INFO] No device found"));
         return;
     }
     else if(Device->isOpen())
