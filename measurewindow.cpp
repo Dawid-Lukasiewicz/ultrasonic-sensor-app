@@ -203,7 +203,7 @@ void MeasureWindow::on_BackMeasureWindow_clicked()
  */
 void MeasureWindow::on_StartMeasureWindow_clicked()
 {
-    SendToLogs("Start Measurement\n-----------------------------------------------------------");
+    SendToLogs(tr("Start Measurement\n") + "-----------------------------------------------------------");
 
     /* Clear data from vectors */
     m_L.clear();
@@ -258,11 +258,11 @@ void MeasureWindow::on_SaveMeasureWindow_clicked()
     /* Opening file and then saving data in it */
     if(!DataFile.open(QIODevice::ReadWrite | QIODevice::Text))
     {
-        SendToLogs("Not opened");
+        SendToLogs(tr("File not opened"));
         return;
     }
     if(DataFile.exists())
-        SendToLogs("[INFO] Saving data to file:\n" + Date + ".txt");
+        SendToLogs(tr("[INFO] Saving data to file:\n") + Date + ".txt");
 
     QTextStream out(&DataFile);
     out.setRealNumberPrecision(3);

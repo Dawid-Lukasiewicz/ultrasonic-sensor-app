@@ -38,6 +38,24 @@
         <source>Plot</source>
         <translation></translation>
     </message>
+    <message>
+        <location filename="measurewindow.cpp" line="206"/>
+        <source>Start Measurement
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="measurewindow.cpp" line="261"/>
+        <source>File not opened</source>
+        <oldsource>Not opened</oldsource>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="measurewindow.cpp" line="265"/>
+        <source>[INFO] Saving data to file:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SetPortWindow</name>
@@ -82,13 +100,53 @@
         <translation></translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="42"/>
+        <location filename="setportwindow.cpp" line="41"/>
         <source>[ERROR] Failed to send message to device</source>
         <translation>[ERROR] Failed to send message to device</translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="74"/>
+        <location filename="setportwindow.cpp" line="58"/>
+        <source>[INFO] </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setportwindow.cpp" line="73"/>
         <source>[INFO] No device found</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setportwindow.cpp" line="78"/>
+        <source>[ERROR] Port </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setportwindow.cpp" line="78"/>
+        <source> already opened</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setportwindow.cpp" line="92"/>
+        <source>[INFO] Serial port opened</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setportwindow.cpp" line="96"/>
+        <source>[ERROR] Failed to open serial port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setportwindow.cpp" line="112"/>
+        <source>[INFO] Port disconnected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setportwindow.cpp" line="116"/>
+        <source>[ERROR] No port connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setportwindow.cpp" line="161"/>
+        <source>Measurement Window</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -24,7 +24,7 @@ SetPortWindow::~SetPortWindow()
 }
 
 /**
- * @brief SetPortWindow::SendToDevice Sends message to connected device
+ * @brief Sends message to connected device
  *
  * @param message - To be sent to device
  *
@@ -34,7 +34,6 @@ void SetPortWindow::SendToDevice(const QString &message)
 {
     if(Device->isOpen() && Device->isWritable())
     {
-        SendToLogs(message);
         Device->write(message.toStdString().c_str());
     }
     else
@@ -56,7 +55,7 @@ void SetPortWindow::on_Search_clicked()
     ui->SelectedPort->clear();
     for(int i = 0; i < devices.count(); i++)
     {
-        SendToLogs(tr( ("[INFO] " + devices.at(i).portName() + "  " + devices.at(i).description()).toStdString().c_str() ));
+        SendToLogs(tr("[INFO] ") + devices.at(i).portName() + "  " + devices.at(i).description()) ;
         ui->SelectedPort->addItem(devices.at(i).portName() + "  " + devices.at(i).description());
     }
 
@@ -76,7 +75,7 @@ void SetPortWindow::on_Connect_clicked()
     }
     else if(Device->isOpen())
     {
-        SendToLogs("[ERROR] Port " + Device->portName() + " already opened");
+        SendToLogs(tr("[ERROR] Port ") + Device->portName() + tr(" already opened"));
         return;
     }
 
@@ -90,11 +89,11 @@ void SetPortWindow::on_Connect_clicked()
         Device->setStopBits(QSerialPort::OneStop);
         Device->setFlowControl(QSerialPort::NoFlowControl);
 
-        SendToLogs("[INFO] Serial port opened");
+        SendToLogs(tr("[INFO] Serial port opened"));
     }
     else
     {
-        SendToLogs("[ERROR] Failed to open serial port");
+        SendToLogs(tr("[ERROR] Failed to open serial port"));
         return;
     }
 
@@ -110,11 +109,11 @@ void SetPortWindow::on_Disconnect_clicked()
     if(Device->isOpen())
     {
         Device->close();
-        SendToLogs("[INFO] Port disconnected");
+        SendToLogs(tr("[INFO] Port disconnected"));
     }
     else
     {
-        SendToLogs("[ERROR] No port connected");
+        SendToLogs(tr("[ERROR] No port connected"));
     }
 }
 
@@ -159,7 +158,7 @@ void SetPortWindow::on_Measurement_clicked()
     this->hide();
 
     MeasureWindow ui_m(nullptr, this->Device);
-    ui_m.setWindowTitle("Measurement Window");
+    ui_m.setWindowTitle(tr("Measurement Window"));
     ui_m.setModal(true);
     ui_m.exec();
 
