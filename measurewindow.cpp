@@ -36,7 +36,7 @@ MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     ui->MeasureWindowPlot->graph(0)->setPen(QPen(Qt::red));
     ui->MeasureWindowPlot->xAxis->setRange(-SENSOR_RANGE - 10, SENSOR_RANGE + 10);
     ui->MeasureWindowPlot->yAxis->setRange(0, SENSOR_RANGE + 10);
-//    ui->MeasureWindowPlot->setInteractions(QCP::iRangeZoom | QCP::iRangeDrag | QCP::iSelectPlottables);
+    ui->MeasureWindowPlot->setInteractions(QCP::iRangeZoom | QCP::iRangeDrag | QCP::iSelectPlottables);
 
     /* Draw sensor current position */
     m_positionValue = ui->horizontalSlider->value();
@@ -153,17 +153,33 @@ void MeasureWindow::ReadFromPort()
         }
         m_X.push_back( m_L.last() * cos(radianValue) + m_positionValue);
         m_Y.push_back( m_L.last() * sin(radianValue) );
-        // This while loop is poorly designed
-        while( sqrt( pow(m_X.last(), 2) + pow(m_Y.last(), 2) ) > SENSOR_RANGE)
+        // Not working correctly
+        if ( sqrt( pow(m_X.last(), 2) + pow(m_Y.last(), 2) ) > SENSOR_RANGE)
         {
-            if(m_L.last() < 0.5)
-                m_L.last() = 0.0;
-            else
-                m_L.last() -= 0.5;
-            m_X.last() =  m_L.last() * cos(radianValue) + m_positionValue;
-            m_Y.last() =  m_L.last() * sin(radianValue);
+           double X = 0, Y = 0;
+           double a = 1 + tan(radianValue);
+           double b = 2 * tan(radianValue) * tan(PI - radianValue);
+           double c = -(SENSOR_RANGE * SENSOR_RANGE + ( tan(PI - radianValue) * tan(PI - radianValue) * m_positionValue * m_positionValue ));
+
+           if (radianValue < PI/2)
+               X = (-b - sqrt(b*b - 4*a*c)) / (2*a);
+           else if (radianValue > PI/2)
+               X = (-b + sqrt(b*b - 4*a*c)) / (2*a);
+           else if (radianValue < PI/2 + 0.01 && radianValue > PI/2 - 0.01)
+               X = m_positionValue;
+
+
+           Y = a * X + b;
+           m_X.last() = X;
+           m_Y.last() = Y;
         }
-        SendToLogs("L=" + QString::number(m_L.last(), 'g', 3) + " X=" + QString::number(m_X.last(), 'g', 3) + " Y=" + QString::number(m_Y.last(), 'g', 3));
+        SendToLogs("L=" + QString::number(m_L.last(), 'g', 3) +
+                   " X=" + QString::number(m_X.last(), 'g', 3) +
+                   " Y=" + QString::number(m_Y.last(), 'g', 3) +
+                   " R=" + QString::number(radianValue));
+//        SendToLogs("L=" + QString::number(m_L.last(), 'g', 3) +
+//                   " X=" + QString::number(m_X.last(), 'g', 3) +
+//                   " Y=" + QString::number(m_Y.last(), 'g', 3));
     }
     DrawDataPlot();
 }

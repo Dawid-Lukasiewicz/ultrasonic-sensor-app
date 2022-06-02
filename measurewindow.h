@@ -9,11 +9,13 @@
 #include <QTextStream>
 #include <QDebug>
 #include <iostream>
+#include <cmath>
 #include "qcustomplot.h"
 
 #define GRAPH_COUNT 5
 #define SENSOR_RANGE 100
 #define SENSOR_ELLIPSE 2
+#define PI 3.14
 
 namespace Ui {
 class MeasureWindow;
