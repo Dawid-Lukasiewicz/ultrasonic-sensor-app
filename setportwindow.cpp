@@ -12,9 +12,9 @@ SetPortWindow::SetPortWindow(QWidget *parent)
 {
     ui->setupUi(this);
     Device = new QSerialPort;
+    ui->SelectLanguage->addItem("English");
+    ui->SelectLanguage->addItem("Polski");
 
-    ui->SelectLanguage->addItem(tr("English"));
-    ui->SelectLanguage->addItem(tr("Polish"));
 }
 
 /**
@@ -24,6 +24,15 @@ SetPortWindow::~SetPortWindow()
 {
     delete ui;
     delete Device;
+}
+
+void SetPortWindow::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QMainWindow::changeEvent(event);
 }
 
 /**
@@ -187,9 +196,6 @@ void SetPortWindow::on_SelectLanguage_currentIndexChanged(int index)
     QDir translationDirectory(QDir().absolutePath());
     translationDirectory.cdUp();
     translationDirectory.cd("ultrasonic-sensor-app/");
-//    translationDirectory.filePath("SetPortWindow_en_150.qm");
-//    SendToLogs(translationDirectory.filePath("SetPortWindow_en_150.qm"));
-//    SendToLogs(translationDirectory.absolutePath());
 
     switch(index)
     {
@@ -198,10 +204,9 @@ void SetPortWindow::on_SelectLanguage_currentIndexChanged(int index)
             if(translate->load("SetPortWindow_en_150.qm", translationDirectory.absolutePath() ))
             {
                 qApp->installTranslator(translate);
-                ui->retranslateUi(this);
             }
             else
-                SendToLogs(tr("Could not load translation"));
+                SendToLogs("Could not load translation");
             break;
         }
         case 1:
@@ -209,10 +214,9 @@ void SetPortWindow::on_SelectLanguage_currentIndexChanged(int index)
             if(translate->load( translationDirectory.filePath("SetPortWindow_pl.qm") ))
             {
                 qApp->installTranslator(translate);
-                ui->retranslateUi(this);
             }
             else
-                SendToLogs(tr("Could not load translation"));
+                SendToLogs("Could not load translation");
             break;
         }
     }

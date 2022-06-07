@@ -4,8 +4,6 @@
 #include <QLocale>
 #include <QTranslator>
 
-//QApplication *a;
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);

@@ -28,6 +28,7 @@ public:
     SetPortWindow(QWidget *parent = nullptr);
     ~SetPortWindow();
     void SendToDevice(const QString &message);
+    virtual void changeEvent(QEvent *event) override;
 
 private slots:
     void on_Search_clicked();
