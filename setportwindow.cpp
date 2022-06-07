@@ -195,7 +195,7 @@ void SetPortWindow::on_SelectLanguage_currentIndexChanged(int index)
     {
         case 0:
         {
-            if(translate->load( translationDirectory.filePath("SetPortWindow_en_150.qm") ))
+            if(translate->load("SetPortWindow_en_150.qm", translationDirectory.absolutePath() ))
             {
                 qApp->installTranslator(translate);
                 ui->retranslateUi(this);
