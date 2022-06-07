@@ -42,7 +42,7 @@ private slots:
     void on_SelectLanguage_currentIndexChanged(int index);
 
 private:
-//    static QTranslator m_translator;
+    QTranslator *translate ;
     Ui::SetPortWindow *ui;
     MeasureWindow *ui_m;
     QSerialPort *Device;

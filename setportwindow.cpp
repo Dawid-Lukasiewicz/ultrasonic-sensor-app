@@ -181,24 +181,36 @@ void SetPortWindow::on_Exit_clicked()
 
 void SetPortWindow::on_SelectLanguage_currentIndexChanged(int index)
 {
-    static QTranslator *translate = new QTranslator();
+    qApp->removeTranslator(translate);
+    translate = new QTranslator();
+
     QDir translationDirectory(QDir().absolutePath());
     translationDirectory.cdUp();
-    SendToLogs(translationDirectory.dirName());
+    translationDirectory.cd("ultrasonic-sensor-app/");
+//    translationDirectory.filePath("SetPortWindow_en_150.qm");
+//    SendToLogs(translationDirectory.filePath("SetPortWindow_en_150.qm"));
+//    SendToLogs(translationDirectory.absolutePath());
+
     switch(index)
     {
         case 0:
         {
-            if(translate->load(translationDirectory.dirName() + "/SetPortWindow_en_150.qm", "."))
+            if(translate->load( translationDirectory.filePath("SetPortWindow_en_150.qm") ))
+            {
                 qApp->installTranslator(translate);
+                ui->retranslateUi(this);
+            }
             else
                 SendToLogs(tr("Could not load translation"));
             break;
         }
         case 1:
         {
-            if(translate->load("pro/SetPortWindow_pl.qm", "."))
+            if(translate->load( translationDirectory.filePath("SetPortWindow_pl.qm") ))
+            {
                 qApp->installTranslator(translate);
+                ui->retranslateUi(this);
+            }
             else
                 SendToLogs(tr("Could not load translation"));
             break;
