@@ -26,6 +26,13 @@ SetPortWindow::~SetPortWindow()
     delete Device;
 }
 
+/**
+ * @brief Overriden member function which retranslates user interface
+ *
+ * @param[in, out] event - Generated event
+ *
+ * @retval None
+ */
 void SetPortWindow::changeEvent(QEvent *event)
 {
     if(event->type() == QEvent::LanguageChange)
@@ -187,7 +194,13 @@ void SetPortWindow::on_Exit_clicked()
     this->close();
 }
 
-
+/**
+ * @brief Change language of user interface
+ *
+ * @param[in] index - Index of chosen language
+ *
+ * @retval None
+ */
 void SetPortWindow::on_SelectLanguage_currentIndexChanged(int index)
 {
     qApp->removeTranslator(translate);
