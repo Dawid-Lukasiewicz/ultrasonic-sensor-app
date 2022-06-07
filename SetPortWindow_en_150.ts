@@ -65,88 +65,104 @@
         <translation>Setting Serial Port Window</translation>
     </message>
     <message>
-        <location filename="setportwindow.ui" line="21"/>
+        <location filename="setportwindow.ui" line="33"/>
         <source>Connectivity</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="setportwindow.ui" line="27"/>
+        <location filename="setportwindow.ui" line="39"/>
         <source>Exit</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="setportwindow.ui" line="34"/>
+        <location filename="setportwindow.ui" line="53"/>
         <source>Search</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="setportwindow.ui" line="54"/>
+        <location filename="setportwindow.ui" line="73"/>
         <source>Disconnect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="setportwindow.ui" line="64"/>
+        <location filename="setportwindow.ui" line="80"/>
         <source>Connect</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="setportwindow.ui" line="71"/>
+        <location filename="setportwindow.ui" line="46"/>
         <source>Measurement</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="setportwindow.ui" line="81"/>
+        <location filename="setportwindow.ui" line="21"/>
         <source>Logs</source>
         <translation></translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="41"/>
+        <location filename="setportwindow.cpp" line="16"/>
+        <source>English</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setportwindow.cpp" line="17"/>
+        <source>Polish</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setportwindow.cpp" line="44"/>
         <source>[ERROR] Failed to send message to device</source>
         <translation>[ERROR] Failed to send message to device</translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="58"/>
+        <location filename="setportwindow.cpp" line="61"/>
         <source>[INFO] </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="73"/>
+        <location filename="setportwindow.cpp" line="76"/>
         <source>[INFO] No device found</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="78"/>
+        <location filename="setportwindow.cpp" line="81"/>
         <source>[ERROR] Port </source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="78"/>
+        <location filename="setportwindow.cpp" line="81"/>
         <source> already opened</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="92"/>
+        <location filename="setportwindow.cpp" line="95"/>
         <source>[INFO] Serial port opened</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="96"/>
+        <location filename="setportwindow.cpp" line="99"/>
         <source>[ERROR] Failed to open serial port</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="112"/>
+        <location filename="setportwindow.cpp" line="115"/>
         <source>[INFO] Port disconnected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="116"/>
+        <location filename="setportwindow.cpp" line="119"/>
         <source>[ERROR] No port connected</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="161"/>
+        <location filename="setportwindow.cpp" line="164"/>
         <source>Measurement Window</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="setportwindow.cpp" line="193"/>
+        <location filename="setportwindow.cpp" line="201"/>
+        <source>Could not load translation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -184,10 +184,23 @@ void SetPortWindow::on_SelectLanguage_currentIndexChanged(int index)
     static QTranslator *translate = new QTranslator();
 
     switch(index)
-    case 0:
     {
-        translate->load("pro/SetPortWindow_en_150.qm", ".");
-
+        case 0:
+        {
+            if(translate->load("../*/SetPortWindow_en_150.qm", "."))
+                qApp->installTranslator(translate);
+            else
+                SendToLogs(tr("Could not load translation"));
+            break;
+        }
+        case 1:
+        {
+            if(translate->load("../*/SetPortWindow_pl.qm", "."))
+                qApp->installTranslator(translate);
+            else
+                SendToLogs(tr("Could not load translation"));
+            break;
+        }
     }
 }
 
