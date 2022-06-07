@@ -4,7 +4,7 @@
 /**
  * @brief Basic constructor of main window
  *
- * @param parent - Basic argument
+ * @param[in, out] parent - Basic argument
  */
 SetPortWindow::SetPortWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -38,7 +38,7 @@ void SetPortWindow::changeEvent(QEvent *event)
 /**
  * @brief Sends message to connected device
  *
- * @param message - To be sent to device
+ * @param[in] message - To be sent to device
  *
  * @retval None
  */
@@ -134,7 +134,7 @@ void SetPortWindow::on_Disconnect_clicked()
  *
  * @details The message is preceded with current time in format yyyy.MM.dd hh:mm:ss --
  *
- * @param message - Message to be sent
+ * @param[in] message - Message to be sent
  *
  * @retval None
  */

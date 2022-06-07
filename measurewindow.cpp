@@ -9,9 +9,9 @@
  * draws ellipse indicating default localization of sensor
  * additionally sets range for slider and its default value
  *
- * @param parent - Basic argument
+ * @param[in, out] parent - Basic argument
  *
- * @param device - Passed device connected in main window
+ * @param device[in, out] - Passed device connected in main window
  */
 MeasureWindow::MeasureWindow(QWidget *parent, QSerialPort *device) :
     QDialog(parent),
@@ -69,7 +69,7 @@ MeasureWindow::~MeasureWindow()
 /**
  * @brief Sends message to connected device
  *
- * @param message - To be sent to device
+ * @param[in] message - To be sent to device
  *
  * @retval None
  */
@@ -88,9 +88,9 @@ void MeasureWindow::SendToDevice(const QString &message)
 /**
  * @brief Drawing data on new graph
  *
- * @param X Vector of data
+ * @param[in] X Vector of data
  *
- * @param Y Vector of data
+ * @param[in] Y Vector of data
  *
  * @retval None
  */
@@ -171,7 +171,7 @@ void MeasureWindow::ReadFromPort()
 /**
  * @brief Sending message to logs
  *
- * @param message Message to be sent
+ * @param[in] message Message to be sent
  *
  * @retval None
  */
@@ -277,7 +277,7 @@ void MeasureWindow::on_SaveMeasureWindow_clicked()
 /**
  * @brief Changing sensor localization vizualization and applying the changed value to coords calculation
  *
- * @param value new value of sensor localization
+ * @param[in] value new value of sensor localization
  *
  * @retval None
  */
