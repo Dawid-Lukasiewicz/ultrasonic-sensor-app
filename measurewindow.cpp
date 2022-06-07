@@ -88,9 +88,9 @@ void MeasureWindow::SendToDevice(const QString &message)
 /**
  * @brief Drawing data on new graph
  *
- * @param[in] X Vector of data
+ * @param[in] X - Vector of data
  *
- * @param[in] Y Vector of data
+ * @param[in] Y - Vector of data
  *
  * @retval None
  */
@@ -171,7 +171,7 @@ void MeasureWindow::ReadFromPort()
 /**
  * @brief Sending message to logs
  *
- * @param[in] message Message to be sent
+ * @param[in] message -  Message to be sent
  *
  * @retval None
  */
@@ -277,7 +277,7 @@ void MeasureWindow::on_SaveMeasureWindow_clicked()
 /**
  * @brief Changing sensor localization vizualization and applying the changed value to coords calculation
  *
- * @param[in] value new value of sensor localization
+ * @param[in] value - new value of sensor localization
  *
  * @retval None
  */
