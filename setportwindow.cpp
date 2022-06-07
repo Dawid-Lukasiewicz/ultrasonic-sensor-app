@@ -182,12 +182,14 @@ void SetPortWindow::on_Exit_clicked()
 void SetPortWindow::on_SelectLanguage_currentIndexChanged(int index)
 {
     static QTranslator *translate = new QTranslator();
-
+    QDir translationDirectory(QDir().absolutePath());
+    translationDirectory.cdUp();
+    SendToLogs(translationDirectory.dirName());
     switch(index)
     {
         case 0:
         {
-            if(translate->load("../*/SetPortWindow_en_150.qm", "."))
+            if(translate->load(translationDirectory.dirName() + "/SetPortWindow_en_150.qm", "."))
                 qApp->installTranslator(translate);
             else
                 SendToLogs(tr("Could not load translation"));
@@ -195,7 +197,7 @@ void SetPortWindow::on_SelectLanguage_currentIndexChanged(int index)
         }
         case 1:
         {
-            if(translate->load("../*/SetPortWindow_pl.qm", "."))
+            if(translate->load("pro/SetPortWindow_pl.qm", "."))
                 qApp->installTranslator(translate);
             else
                 SendToLogs(tr("Could not load translation"));
