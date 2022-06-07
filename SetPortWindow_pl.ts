@@ -67,87 +67,100 @@
         <translation>Konfiguracja portów</translation>
     </message>
     <message>
-        <location filename="setportwindow.ui" line="21"/>
+        <location filename="setportwindow.ui" line="33"/>
         <source>Connectivity</source>
         <translation>Połączenia</translation>
     </message>
     <message>
-        <location filename="setportwindow.ui" line="27"/>
+        <location filename="setportwindow.ui" line="82"/>
         <source>Exit</source>
         <translation>Zamknij</translation>
     </message>
     <message>
-        <location filename="setportwindow.ui" line="34"/>
+        <location filename="setportwindow.ui" line="128"/>
+        <source>Language</source>
+        <translation>Język</translation>
+    </message>
+    <message>
+        <location filename="setportwindow.ui" line="75"/>
         <source>Search</source>
         <translation>Szukaj</translation>
     </message>
     <message>
-        <location filename="setportwindow.ui" line="54"/>
+        <location filename="setportwindow.ui" line="89"/>
         <source>Disconnect</source>
         <translation>Rozłącz</translation>
     </message>
     <message>
-        <location filename="setportwindow.ui" line="64"/>
+        <location filename="setportwindow.ui" line="39"/>
         <source>Connect</source>
         <translation>Połącz</translation>
     </message>
     <message>
-        <location filename="setportwindow.ui" line="71"/>
+        <location filename="setportwindow.ui" line="52"/>
         <source>Measurement</source>
         <translation>Pomiar</translation>
     </message>
     <message>
-        <location filename="setportwindow.ui" line="81"/>
+        <location filename="setportwindow.ui" line="21"/>
         <source>Logs</source>
         <translation>Logi</translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="41"/>
+        <source>English</source>
+        <translation type="vanished">Angielski</translation>
+    </message>
+    <message>
+        <source>Polish</source>
+        <translation type="vanished">Polski</translation>
+    </message>
+    <message>
+        <location filename="setportwindow.cpp" line="53"/>
         <source>[ERROR] Failed to send message to device</source>
         <translation>[PORAŻKA] Nie powodzenie wysłaniu wiadomości do urządzenia</translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="58"/>
+        <location filename="setportwindow.cpp" line="70"/>
         <source>[INFO] </source>
         <translation>[INFO] </translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="73"/>
+        <location filename="setportwindow.cpp" line="85"/>
         <source>[INFO] No device found</source>
         <translation>[INFO] Nie znaleziono urządzenia</translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="78"/>
+        <location filename="setportwindow.cpp" line="90"/>
         <source>[ERROR] Port </source>
         <translation>[PORAŻKA] Port </translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="78"/>
+        <location filename="setportwindow.cpp" line="90"/>
         <source> already opened</source>
         <translation> już otwarty</translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="92"/>
+        <location filename="setportwindow.cpp" line="104"/>
         <source>[INFO] Serial port opened</source>
         <translation>[INFO] Port szeregowy otwarty</translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="96"/>
+        <location filename="setportwindow.cpp" line="108"/>
         <source>[ERROR] Failed to open serial port</source>
         <translation>[PORAŻKA] Nie udana próba otwarcia portu szeregowego</translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="112"/>
+        <location filename="setportwindow.cpp" line="124"/>
         <source>[INFO] Port disconnected</source>
         <translation>[INFO] Rozłączono port</translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="116"/>
+        <location filename="setportwindow.cpp" line="128"/>
         <source>[ERROR] No port connected</source>
         <translation>[PORAŻKA] Nie połączono z portem</translation>
     </message>
     <message>
-        <location filename="setportwindow.cpp" line="161"/>
+        <location filename="setportwindow.cpp" line="173"/>
         <source>Measurement Window</source>
         <translation>Okno pomiarowe</translation>
     </message>

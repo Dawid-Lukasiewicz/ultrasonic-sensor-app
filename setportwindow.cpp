@@ -12,6 +12,9 @@ SetPortWindow::SetPortWindow(QWidget *parent)
 {
     ui->setupUi(this);
     Device = new QSerialPort;
+    ui->SelectLanguage->addItem("English");
+    ui->SelectLanguage->addItem("Polski");
+
 }
 
 /**
@@ -21,6 +24,15 @@ SetPortWindow::~SetPortWindow()
 {
     delete ui;
     delete Device;
+}
+
+void SetPortWindow::changeEvent(QEvent *event)
+{
+    if(event->type() == QEvent::LanguageChange)
+    {
+        ui->retranslateUi(this);
+    }
+    QMainWindow::changeEvent(event);
 }
 
 /**
@@ -173,5 +185,40 @@ void SetPortWindow::on_Measurement_clicked()
 void SetPortWindow::on_Exit_clicked()
 {
     this->close();
+}
+
+
+void SetPortWindow::on_SelectLanguage_currentIndexChanged(int index)
+{
+    qApp->removeTranslator(translate);
+    translate = new QTranslator();
+
+    QDir translationDirectory(QDir().absolutePath());
+    translationDirectory.cdUp();
+    translationDirectory.cd("ultrasonic-sensor-app/");
+
+    switch(index)
+    {
+        case 0:
+        {
+            if(translate->load("SetPortWindow_en_150.qm", translationDirectory.absolutePath() ))
+            {
+                qApp->installTranslator(translate);
+            }
+            else
+                SendToLogs("Could not load translation");
+            break;
+        }
+        case 1:
+        {
+            if(translate->load( translationDirectory.filePath("SetPortWindow_pl.qm") ))
+            {
+                qApp->installTranslator(translate);
+            }
+            else
+                SendToLogs("Could not load translation");
+            break;
+        }
+    }
 }
 

@@ -7,10 +7,14 @@
 #include <QSerialPort>
 #include <QDateTime>
 #include <QPainter>
+#include <QTranslator>
+#include <QApplication>
 
 #include <QMainWindow>
 
 #include "measurewindow.h"
+
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class SetPortWindow; }
@@ -24,6 +28,7 @@ public:
     SetPortWindow(QWidget *parent = nullptr);
     ~SetPortWindow();
     void SendToDevice(const QString &message);
+    virtual void changeEvent(QEvent *event) override;
 
 private slots:
     void on_Search_clicked();
@@ -35,7 +40,10 @@ private slots:
 
     void on_Exit_clicked();
 
+    void on_SelectLanguage_currentIndexChanged(int index);
+
 private:
+    QTranslator *translate ;
     Ui::SetPortWindow *ui;
     MeasureWindow *ui_m;
     QSerialPort *Device;
