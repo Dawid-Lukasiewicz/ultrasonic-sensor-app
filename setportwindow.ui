@@ -15,6 +15,18 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="1">
+     <widget class="QGroupBox" name="Logs">
+      <property name="title">
+       <string>Logs</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="0">
+        <widget class="QTextEdit" name="textEditLogs"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="0" column="0">
      <widget class="QGroupBox" name="groupBox">
       <property name="title">
@@ -25,6 +37,13 @@
         <widget class="QPushButton" name="Exit">
          <property name="text">
           <string>Exit</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QPushButton" name="Measurement">
+         <property name="text">
+          <string>Measurement</string>
          </property>
         </widget>
        </item>
@@ -55,9 +74,6 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QComboBox" name="SelectedPort"/>
-       </item>
        <item row="1" column="0">
         <widget class="QPushButton" name="Connect">
          <property name="text">
@@ -65,24 +81,11 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QPushButton" name="Measurement">
-         <property name="text">
-          <string>Measurement</string>
-         </property>
-        </widget>
+       <item row="1" column="1">
+        <widget class="QComboBox" name="SelectedPort"/>
        </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="1">
-     <widget class="QGroupBox" name="Logs">
-      <property name="title">
-       <string>Logs</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout">
-       <item row="0" column="0">
-        <widget class="QTextEdit" name="textEditLogs"/>
+       <item row="3" column="1">
+        <widget class="QComboBox" name="SelectLanguage"/>
        </item>
       </layout>
      </widget>
