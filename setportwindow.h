@@ -7,10 +7,14 @@
 #include <QSerialPort>
 #include <QDateTime>
 #include <QPainter>
+#include <QTranslator>
+#include <QApplication>
 
 #include <QMainWindow>
 
 #include "measurewindow.h"
+
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class SetPortWindow; }
@@ -35,7 +39,10 @@ private slots:
 
     void on_Exit_clicked();
 
+    void on_SelectLanguage_currentIndexChanged(int index);
+
 private:
+//    static QTranslator m_translator;
     Ui::SetPortWindow *ui;
     MeasureWindow *ui_m;
     QSerialPort *Device;

@@ -12,6 +12,9 @@ SetPortWindow::SetPortWindow(QWidget *parent)
 {
     ui->setupUi(this);
     Device = new QSerialPort;
+
+    ui->SelectLanguage->addItem(tr("English"));
+    ui->SelectLanguage->addItem(tr("Polish"));
 }
 
 /**
@@ -173,5 +176,18 @@ void SetPortWindow::on_Measurement_clicked()
 void SetPortWindow::on_Exit_clicked()
 {
     this->close();
+}
+
+
+void SetPortWindow::on_SelectLanguage_currentIndexChanged(int index)
+{
+    static QTranslator *translate = new QTranslator();
+
+    switch(index)
+    case 0:
+    {
+        translate->load("pro/SetPortWindow_en_150.qm", ".");
+
+    }
 }
 
